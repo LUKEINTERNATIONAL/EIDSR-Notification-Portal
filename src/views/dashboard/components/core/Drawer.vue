@@ -113,6 +113,11 @@
         },
         {
           icon: 'mdi-account',
+          title: 'respondents',
+          to: '/pages/respondents',
+        },
+        {
+          icon: 'mdi-account',
           title: 'user',
           to: '/pages/user',
         },
