@@ -173,7 +173,7 @@
 </template>
 
 <script>
-  export default {
+export default {
     methods: {
       logout(){
       //unset login state
@@ -186,4 +186,4 @@
     }
     }
   }
-
+</script>

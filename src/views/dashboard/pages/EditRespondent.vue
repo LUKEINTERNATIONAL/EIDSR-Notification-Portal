@@ -136,9 +136,9 @@
                   <v-btn
                     color="success"
                     class="mr-0"
-                    @click="AddRespondent"
+                    @click="EditRespondent(respondent.id)"
                   >
-                    Add
+                    Submit
                   </v-btn>
                 </v-col>
               </v-row>
@@ -157,6 +157,7 @@ export default {
     data() {
         return {
             respondent: {
+                id: null,
                 first_name: this.first_name,
                 last_name: this.last_name,
                 phone_pri: this.phone_pri,
@@ -165,6 +166,7 @@ export default {
             },
             about: this.about,
             phone_sec: this.phone_sec,
+            user_name: this.user_name,
 
             error: null,
             rules: {
@@ -173,7 +175,7 @@ export default {
         }
     },
     methods: {
-      async AddRespondent(){
+      async EditRespondent(id){
             this.error = null
             const areAllFieldsFilledIn = Object
                .keys(this.respondent)
@@ -186,8 +188,9 @@ export default {
             try {
               Object.assign(this.respondent, this.about)
               Object.assign(this.respondent, this.phone_sec)
+              Object.assign(this.respondent, this.user_name)
 
-              await respondentService.post(this.respondent)
+              await respondentService.put(this.respondent, id)
               this.$router.push({
                 name: 'Respondents'
               })
@@ -195,7 +198,28 @@ export default {
               this.error = err.response.data.error
             }
       }
-    }
+    },
+     async mounted() {
+         console.log("...")
+         this.error = null
+         const id = this.$store.state.respondentIdEdit
+         try {
+             const data = (await respondentService.show(id)).data
+
+             this.respondent.id = data.id
+             this.respondent.email = data.email
+             this.respondent.first_name = data.first_name
+             this.respondent.last_name = data.last_name
+             this.respondent.phone_pri = data.phone_pri
+             this.respondent.facility_code = data.facility_code
+             this.respondent.user_name = data.user_name
+             this.respondent.phone_sec = data.phone_sec
+             this.respondent.about = data.about
+             
+         } catch (err) {
+             console.log(err.response.data.error)
+         }
+     }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

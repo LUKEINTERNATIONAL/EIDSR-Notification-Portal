@@ -16,6 +16,7 @@ export default new Vuex.Store({
     token: null,
     user: null,
     isUserLoggedIn: false,
+    respondentIdEdit: null
   },
   mutations: {
     SET_BAR_IMAGE (state, payload) {
@@ -32,18 +33,24 @@ export default new Vuex.Store({
       } else {
           state.isUserLoggedIn = false
       }
-  },
-  setUser (state, user) {
-      state.user = user
-  },
+    },
+    setUser (state, user) {
+        state.user = user
+    },
+    setRespondentIdEdit(state, id) {
+      state.respondentIdEdit = id
+    }
   },
 
   actions: {
     setToken({commit}, token) {
       commit('setToken', token)
-  },
-  setUser({commit}, user) {
+    },
+    setUser({commit}, user) {
       commit('setUser', user)
-  },
+    },
+    setRespondentIdEdit({commit}, id) {
+      commit('setRespondentIdEdit', id)
+    }
   },
 })

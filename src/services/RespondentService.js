@@ -9,11 +9,11 @@ export default {
         return Api().post(`respondent`,respondent)
     },
 
-    show(itemId) {
+    show(respondentId) {
         return Api().get(`respondents/${respondentId}`)
     },
 
-    put(respondent,itemId) {
-        return Api().put(`respondents/${respondentId}`,respondent)
+    put(respondent,respondentId) {
+        return Api().put(`respondent/${respondentId}`,respondent)
     }
 }

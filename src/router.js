@@ -30,6 +30,11 @@ const router = new Router({
           component: () => import('@/views/dashboard/pages/AddRespondent'),
         },
         {
+          name: 'Edit Respondent',
+          path: 'pages/editrespondent',
+          component: () => import('@/views/dashboard/pages/EditRespondent'),
+        },
+        {
           name: 'Respondents',
           path: 'pages/respondents',
           component: () => import('@/views/dashboard/pages/Respondents'),

@@ -68,7 +68,7 @@
                 <v-btn
                     elevation="3"
                     fab
-                    @click="navigateTo({name: 'Add Respondent'})"
+                    @click="navigateTo({name: 'Edit Respondent'},respondent.id)"
                 > <v-icon>mdi-account-edit</v-icon>
                 </v-btn>
             </td>
@@ -92,7 +92,8 @@ export default {
     }
   },
   methods: {
-    navigateTo(route){
+    navigateTo(route, id){
+      this.$store.dispatch('setRespondentIdEdit', id)
       this.$router.push(route)
     }
   },

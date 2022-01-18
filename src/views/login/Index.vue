@@ -9,7 +9,7 @@
                   <v-img class="lgn-img"  v-bind:src="image.msg" />
                 </v-col>
                 <v-col style="margin-top: 6%">
-                  <label class="lgn-txt">LIN SMS Portal</label>
+                  <label class="lgn-txt">EIDSR Notification Portal</label>
                 </v-col>
               </v-row>
             </div>
@@ -104,7 +104,7 @@ export default {
   width: 100%;
 }
 .lgn-txt {
-  font-size: 80px;
+  font-size: 50px;
   line-height: 80px;
   color: #494948;
 }
