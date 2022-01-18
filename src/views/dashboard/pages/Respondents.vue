@@ -106,13 +106,15 @@ export default {
       this.$router.push(route)
     },
     async removeRespondent(id) {
-      try {
-        const respondent = (await respondentService.delete(id)).data
+      if(confirm("Do you really want to delete?")){
+        try {
+          const respondent = (await respondentService.delete(id)).data
 
-        if(!!respondent)
-          this.$router.go(this.$router.currentRoute)
-      } catch (err) {
-        console.log(err)
+          if(!!respondent)
+            this.$router.go(this.$router.currentRoute)
+        } catch (err) {
+          console.log(err)
+        } 
       }
     }
   },
