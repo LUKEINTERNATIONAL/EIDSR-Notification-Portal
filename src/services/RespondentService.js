@@ -15,5 +15,9 @@ export default {
 
     put(respondent,respondentId) {
         return Api().put(`respondent/${respondentId}`,respondent)
+    },
+
+    delete (respondentId) {
+        return Api().delete(`respondent/${respondentId}`)
     }
 }

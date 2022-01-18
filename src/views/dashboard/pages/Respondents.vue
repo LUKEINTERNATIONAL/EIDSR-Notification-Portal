@@ -66,10 +66,19 @@
             <td>{{respondent.email}}</td>
             <td class="action-edit-btn">
                 <v-btn
+                    style="background-color: #5757e7"
                     elevation="3"
                     fab
                     @click="navigateTo({name: 'Edit Respondent'},respondent.id)"
                 > <v-icon>mdi-account-edit</v-icon>
+                </v-btn>
+
+                <v-btn
+                    style="margin-left: 33px; background-color: #e46048"
+                    elevation="3"
+                    fab
+                    @click="removeRespondent(respondent.id)"
+                > <v-icon>mdi-account-remove</v-icon>
                 </v-btn>
             </td>
           </tr>
@@ -95,6 +104,16 @@ export default {
     navigateTo(route, id){
       this.$store.dispatch('setRespondentIdEdit', id)
       this.$router.push(route)
+    },
+    async removeRespondent(id) {
+      try {
+        const respondent = (await respondentService.delete(id)).data
+
+        if(!!respondent)
+          this.$router.go(this.$router.currentRoute)
+      } catch (err) {
+        console.log(err)
+      }
     }
   },
   async mounted() {
@@ -111,6 +130,7 @@ export default {
 }
 .action-edit-btn .v-btn--fab.v-size--default{
   height: 30px;
-width: 30px;
+  width: 30px;
+  color: #e46048;
 }
 </style>
