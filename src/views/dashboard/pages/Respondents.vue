@@ -20,6 +20,7 @@
                <v-btn
                     elevation="2"
                     fab
+                    @click="navigateTo({name: 'Add Respondent'})"
                 > <v-icon>mdi-account-plus</v-icon>
                 </v-btn>
             </div>
@@ -46,6 +47,9 @@
             <th class="primary--text">
               Email
             </th>
+            <th class="primary--text">
+
+            </th>
           </tr>
         </thead>
 
@@ -60,6 +64,14 @@
             <td>{{respondent.phone_pri}}</td>
             <td>{{respondent.phone_sec}}</td>
             <td>{{respondent.email}}</td>
+            <td class="action-edit-btn">
+                <v-btn
+                    elevation="3"
+                    fab
+                    @click="navigateTo({name: 'Add Respondent'})"
+                > <v-icon>mdi-account-edit</v-icon>
+                </v-btn>
+            </td>
           </tr>
         </tbody>
       </v-simple-table>
@@ -80,7 +92,9 @@ export default {
     }
   },
   methods: {
-    async login () {}
+    navigateTo(route){
+      this.$router.push(route)
+    }
   },
   async mounted() {
     // (await itemsService.index()).data
@@ -93,5 +107,9 @@ export default {
 <style scoped>
 .v-icon {
   font-size: 70px;
+}
+.action-edit-btn .v-btn--fab.v-size--default{
+  height: 30px;
+width: 30px;
 }
 </style>

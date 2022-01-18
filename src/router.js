@@ -25,6 +25,11 @@ const router = new Router({
           component: () => import('@/views/dashboard/pages/UserProfile'),
         },
         {
+          name: 'Add Respondent',
+          path: 'pages/addrespondent',
+          component: () => import('@/views/dashboard/pages/AddRespondent'),
+        },
+        {
           name: 'Respondents',
           path: 'pages/respondents',
           component: () => import('@/views/dashboard/pages/Respondents'),
