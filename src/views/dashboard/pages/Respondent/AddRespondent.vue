@@ -151,7 +151,7 @@
 </template>
 
 <script>
-import respondentService from '../../../services/RespondentService'
+import respondentService from '../../../../services/RespondentService'
 
 export default {
     data() {

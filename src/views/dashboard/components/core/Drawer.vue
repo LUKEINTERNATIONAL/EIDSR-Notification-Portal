@@ -112,6 +112,11 @@
           to: '/',
         },
         {
+          icon: 'mdi-message',
+          title: 'messages',
+          to: '/pages/messages',
+        },
+        {
           icon: 'mdi-account',
           title: 'respondents',
           to: '/pages/respondents',

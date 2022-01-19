@@ -27,17 +27,22 @@ const router = new Router({
         {
           name: 'Add Respondent',
           path: 'pages/addrespondent',
-          component: () => import('@/views/dashboard/pages/AddRespondent'),
+          component: () => import('@/views/dashboard/pages/Respondent/AddRespondent'),
         },
         {
           name: 'Edit Respondent',
           path: 'pages/editrespondent',
-          component: () => import('@/views/dashboard/pages/EditRespondent'),
+          component: () => import('@/views/dashboard/pages/Respondent/EditRespondent'),
         },
         {
           name: 'Respondents',
           path: 'pages/respondents',
-          component: () => import('@/views/dashboard/pages/Respondents'),
+          component: () => import('@/views/dashboard/pages/Respondent/Respondents'),
+        },
+        {
+          name: 'Messages',
+          path: 'pages/messages',
+          component: () => import('@/views/dashboard/pages/Message/Messages'),
         },
         {
           name: 'Notifications',

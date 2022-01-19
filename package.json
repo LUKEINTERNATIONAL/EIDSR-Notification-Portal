@@ -26,7 +26,8 @@
     "vuetify": "^2.2.11",
     "vuex": "^2.4.0",
     "vuex-persistedstate": "^2.0.0",
-    "vuex-router-sync": "^4.3.1"
+    "vuex-router-sync": "^4.3.1",
+    "moment": "2.24.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.2",
