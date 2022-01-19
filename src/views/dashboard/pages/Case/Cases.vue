@@ -12,17 +12,7 @@
     >
            <template v-slot:heading>
             <div class="clip-b font-weight-light">
-                 <v-icon>mdi-clipboard-text</v-icon>
-                
-            </div>
-
-            <div class="font-weight-light" style="float: right; margin-top: -60px;">
-               <v-btn
-                    elevation="2"
-                    fab
-                    @click="navigateTo({name: 'Add Respondent'})"
-                > <v-icon>mdi-account-plus</v-icon>
-                </v-btn>
+              <v-icon>mdi-clipboard-text</v-icon>
             </div>
           </template>
 
@@ -33,54 +23,34 @@
               ID
             </th>
             <th class="primary--text">
-              Name
+              Facility Code
             </th>
             <th class="primary--text">
-              Facility
+              Condition (name)
             </th>
             <th class="primary--text">
-              Phone (primary)
+              Less Than and Equal to Five Years
             </th>
             <th class="primary--text">
-              Phone (secondary)
+              Greater Than Five Years
             </th>
             <th class="primary--text">
-              Email
-            </th>
-            <th class="primary--text">
-
+              Date
             </th>
           </tr>
         </thead>
 
         <tbody
-         v-for="respondent in respondents"
-         :key="respondent.id"
+         v-for="_case in cases"
+         :key="_case.id"
         >
           <tr>
-            <td>{{respondent.id}}</td>
-            <td>{{respondent.first_name+" "+respondent.last_name}}</td>
-            <td>{{respondent.facility_code}}</td>
-            <td>{{respondent.phone_pri}}</td>
-            <td>{{respondent.phone_sec}}</td>
-            <td>{{respondent.email}}</td>
-            <td class="action-edit-btn">
-                <v-btn
-                    style="background-color: #5757e7"
-                    elevation="3"
-                    fab
-                    @click="navigateTo({name: 'Edit Respondent'},respondent.id)"
-                > <v-icon>mdi-account-edit</v-icon>
-                </v-btn>
-
-                <v-btn
-                    style="margin-left: 33px; background-color: #e46048"
-                    elevation="3"
-                    fab
-                    @click="removeRespondent(respondent.id)"
-                > <v-icon>mdi-account-remove</v-icon>
-                </v-btn>
-            </td>
+            <td>{{_case.id}}</td>
+            <td>{{_case.facility_code}}</td>
+            <td>{{_case.condition_name}}</td>
+            <td>{{_case.less_five_years}}</td>
+            <td>{{_case.greater_equal_five_years}}</td>
+            <td>{{_case.createdAt}}</td>
           </tr>
         </tbody>
       </v-simple-table>
@@ -91,36 +61,20 @@
 </template>
 
 <script>
-import respondentService from '../../../../services/RespondentService'
+import caseService from '../../../../services/CaseService'
 
 export default {
   components: {  },
   data() {
     return {
-      respondents: null
+      cases: null
     }
   },
   methods: {
-    navigateTo(route, id){
-      this.$store.dispatch('setRespondentIdEdit', id)
-      this.$router.push(route)
-    },
-    async removeRespondent(id) {
-      if(confirm("Do you really want to delete?")){
-        try {
-          const respondent = (await respondentService.delete(id)).data
-
-          if(!!respondent)
-            this.$router.go(this.$router.currentRoute)
-        } catch (err) {
-          console.log(err)
-        } 
-      }
-    }
   },
   async mounted() {
     // (await itemsService.index()).data
-    this.respondents = (await respondentService.index()).data
+    this.cases = (await caseService.index()).data
   },
 }
 </script>
