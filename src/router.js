@@ -45,6 +45,11 @@ const router = new Router({
           component: () => import('@/views/dashboard/pages/Message/Messages'),
         },
         {
+          name: 'Cases',
+          path: 'pages/cases',
+          component: () => import('@/views/dashboard/pages/Case/Cases'),
+        },
+        {
           name: 'Notifications',
           path: 'components/notifications',
           component: () => import('@/views/dashboard/component/Notifications'),
@@ -70,12 +75,6 @@ const router = new Router({
           name: 'Google Maps',
           path: 'maps/google-maps',
           component: () => import('@/views/dashboard/maps/GoogleMaps'),
-        },
-        // Upgrade
-        {
-          name: 'Upgrade',
-          path: 'upgrade',
-          component: () => import('@/views/dashboard/Upgrade'),
         },
       ],
     },

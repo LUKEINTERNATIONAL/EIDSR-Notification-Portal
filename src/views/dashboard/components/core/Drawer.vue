@@ -76,15 +76,7 @@
       <div />
     </v-list>
 
-    <template v-slot:append>
-      <base-item
-        :item="{
-          title: $t('upgrade'),
-          icon: 'mdi-package-up',
-          to: '/upgrade',
-        }"
-      />
-    </template>
+
   </v-navigation-drawer>
 </template>
 
@@ -115,6 +107,11 @@
           icon: 'mdi-message',
           title: 'messages',
           to: '/pages/messages',
+        },
+        {
+          icon: 'mdi-alert-circle',
+          title: 'cases',
+          to: '/pages/cases',
         },
         {
           icon: 'mdi-account',
