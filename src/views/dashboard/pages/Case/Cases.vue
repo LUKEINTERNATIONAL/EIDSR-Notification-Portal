@@ -50,7 +50,7 @@
             <td>{{_case.condition_name}}</td>
             <td>{{_case.less_five_years}}</td>
             <td>{{_case.greater_equal_five_years}}</td>
-            <td>{{_case.createdAt}}</td>
+            <td>{{ moment(_case.createdAt).format('MMMM Do YYYY, h:mm:ss a') }}</td>
           </tr>
         </tbody>
       </v-simple-table>
@@ -62,12 +62,14 @@
 
 <script>
 import caseService from '../../../../services/CaseService'
+var moment = require('moment')
 
 export default {
   components: {  },
   data() {
     return {
-      cases: null
+      cases: null,
+      moment: moment
     }
   },
   methods: {

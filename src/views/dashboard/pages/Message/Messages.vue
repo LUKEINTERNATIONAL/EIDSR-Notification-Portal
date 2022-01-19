@@ -49,7 +49,7 @@
             <td>{{message.respondent_id}}</td>
             <td>{{message.body}}</td>
             <td>{{message.status}}</td>
-            <td>{{ moment(message.createdAt).format('MMMM Do YYYY, h:mm:ss a')}}</td>
+            <td>{{ moment(message.createdAt).format('MMMM Do YYYY, h:mm:ss a') }}</td>
             <td class="action-edit-btn">
                 <v-btn
                     style="background-color: #5757e7"
