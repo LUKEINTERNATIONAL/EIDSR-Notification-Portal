@@ -85,7 +85,8 @@ export default {
   data() {
     return {
       messages: null,
-      moment: moment
+      moment: moment,
+      fullPage: false
     }
   },
   methods: {
@@ -107,8 +108,18 @@ export default {
     }
   },
   async mounted() {
-    // (await itemsService.index()).data
+    let loader = this.$loading.show({
+      // Optional parameters
+      container: this.fullPage ? null : this.$refs.formContainer,
+      canCancel: false,
+      loader: 'spinner',
+      width: 100,
+      height: 64,
+    });
     this.messages = (await messageService.index()).data
+    if (!!this.messages) {
+     loader.hide()
+    }
   },
 }
 </script>

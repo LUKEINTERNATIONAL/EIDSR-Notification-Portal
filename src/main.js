@@ -24,6 +24,8 @@ import materialDesign from 'material-design-icons/iconfont/material-icons.css';
 import i18n from './i18n'
 import SvgIcon from '@jamescoyle/vue-icon'
 import  mdiAccount  from '@mdi/js'
+import VueLoading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 const router = Router
 
@@ -32,6 +34,7 @@ Vue.config.productionTip = false
 sync(store, router)
 
 Vue.use(SvgIcon)
+Vue.use(VueLoading)
 
 new Vue({
   router,
