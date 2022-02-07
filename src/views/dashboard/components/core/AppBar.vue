@@ -106,14 +106,41 @@
       </v-list>
     </v-menu>
 
-    <v-btn
-      class="ml-2"
-      min-width="0"
-      text
-      to="/pages/user"
-    >
-      <v-icon>mdi-account</v-icon>
-    </v-btn>
+    <v-menu
+     bottom
+     left
+     offset-y
+     origin="top right"
+     transition="scale-transition">
+
+      <template v-slot:activator="{ attrs, on }">
+        <v-btn
+          class="ml-2"
+          min-width="0"
+          text
+          v-bind="attrs"
+          v-on="on"
+        >
+         <v-icon>mdi-account</v-icon>
+        </v-btn>
+      </template>
+
+      <v-list
+        :tile="false"
+        nav
+      >   
+            <v-list-item class="vli-c"><v-icon>mdi-account-plus</v-icon>Add User</v-list-item>
+
+            <v-list-item class="vli-c"
+             to="/pages/user">
+            <v-icon>mdi-account-edit</v-icon>Edit Profile</v-list-item>
+
+            <v-list-item class="vli-c"
+             @click="logout">
+              <v-icon>mdi-axe</v-icon>Logout</v-list-item>
+          
+      </v-list>
+    </v-menu>
   </v-app-bar>
 </template>
 
@@ -178,6 +205,28 @@
       ...mapMutations({
         setDrawer: 'SET_DRAWER',
       }),
+      logout() {
+        //unset login state
+        this.$store.dispatch('setToken', null)
+        this.$store.dispatch('setUser', null)
+        //redirect
+        this.$router.push({
+          name: 'login'
+        })
+      } 
     },
   }
 </script>
+<style scoped>
+ .vli-c {
+   width: 180px;
+    
+ }
+ .vli-c:hover{
+   background: blueviolet;
+   color: whitesmoke !important;
+ }
+ .v-icon.v-icon {
+   font-size: 20px !important;
+ }
+</style>

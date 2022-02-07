@@ -10,7 +10,7 @@
         md="8"
       >
         <base-material-card
-            icon="mdi-account-plus"
+            icon="mdi-account-edit"
             title=""
             class="px-5 py-3"
         >

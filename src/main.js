@@ -33,7 +33,6 @@ Vue.config.productionTip = false
 
 sync(store, router)
 
-Vue.use(SvgIcon)
 Vue.use(VueLoading)
 
 new Vue({

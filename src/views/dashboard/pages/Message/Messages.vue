@@ -10,12 +10,11 @@
       title=""
       class="px-5 py-3"
     >
-           <template v-slot:heading>
-            <div class="clip-b font-weight-light">
-              <v-icon>mdi-clipboard-text</v-icon> 
-            </div>
-          </template>
-
+    <template v-slot:heading>
+    <div class="clip-b font-weight-light">
+      <v-icon>mdi-clipboard-text</v-icon> 
+    </div>
+    </template>
       <v-simple-table>
         <thead>
           <tr>
@@ -51,21 +50,18 @@
             <td>{{message.status}}</td>
             <td>{{ moment(message.createdAt).format('MMMM Do YYYY, h:mm:ss a') }}</td>
             <td class="action-edit-btn">
-                <v-btn
-                    style="background-color: #5757e7"
-                    elevation="3"
-                    fab
-                    @click="navigateTo({name: 'Edit Respondent'},message.id)"
-                > <v-icon>mdi-account-edit</v-icon>
-                </v-btn>
 
+                <div class="tooltip">
                 <v-btn
                     style="margin-left: 33px; background-color: #e46048"
                     elevation="3"
                     fab
-                    @click="removeRespondent(message.id)"
-                > <v-icon>mdi-account-remove</v-icon>
+                    @click="deleteMessage(message.id)"
+                > <v-icon>mdi-delete</v-icon>
                 </v-btn>
+                 <span class="tooltiptext">delete</span>
+                </div>
+
             </td>
           </tr>
         </tbody>
@@ -94,12 +90,12 @@ export default {
       this.$store.dispatch('setRespondentIdEdit', id)
       this.$router.push(route)
     },
-    async removeRespondent(id) {
+    async deleteMessage(id) {
       if(confirm("Do you really want to delete?")){
         try {
-          const respondent = (await respondentService.delete(id)).data
+          const message = (await messageService.delete(id)).data
 
-          if(!!respondent)
+          if(!!message)
             this.$router.go(this.$router.currentRoute)
         } catch (err) {
           console.log(err)
@@ -133,5 +129,30 @@ export default {
   height: 30px;
   width: 30px;
   color: #e46048;
+}
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 50px;
+  background-color: rgb(32, 30, 30);
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 10;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 </style>
