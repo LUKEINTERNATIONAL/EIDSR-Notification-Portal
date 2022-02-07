@@ -40,6 +40,7 @@
                   <v-text-field
                     class="purple-input"
                     label="User Name"
+                    v-model="user.username"
                   />
                 </v-col>
 
@@ -61,6 +62,7 @@
                   <v-text-field
                     label="First Name"
                     class="purple-input"
+                    v-model="user.first_name"
                   />
                 </v-col>
 
@@ -71,6 +73,7 @@
                   <v-text-field
                     label="Last Name"
                     class="purple-input"
+                    v-model="user.last_name"
                   />
                 </v-col>
 
@@ -78,26 +81,7 @@
                   <v-text-field
                     label="Adress"
                     class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="City"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Country"
-                    class="purple-input"
+                    v-model="user.address"
                   />
                 </v-col>
 
@@ -107,8 +91,22 @@
                 >
                   <v-text-field
                     class="purple-input"
-                    label="Postal Code"
+                    required
+                    label="Phone (primary)"
                     type="number"
+                    v-model="user.phone_pri"
+                  />
+                </v-col>
+
+                <v-col
+                  cols="12"
+                  md="4"
+                >
+                  <v-text-field
+                    class="purple-input"
+                    label="Phone (secondary)"
+                    type="number"
+                   v-model="user.phone_sec"
                   />
                 </v-col>
 
@@ -116,7 +114,7 @@
                   <v-textarea
                     class="purple-input"
                     label="About Me"
-                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                    v-model="user.about"
                   />
                 </v-col>
 
@@ -152,6 +150,8 @@ export default {
               phone_pri: this.phone_pri,
               email: this.email,
               facility_code: this.facility_code,
+              address: this.address,
+              username: this.username
           },
           about: this.about,
           phone_sec: this.phone_sec,
@@ -183,8 +183,10 @@ export default {
 
           this.user.id = data.id
           this.user.email = data.email
+          this.user.username = data.username
           this.user.first_name = data.first_name
           this.user.last_name = data.last_name
+          this.user.address = data.address
           this.user.phone_pri = data.phone_pri
           this.user.facility_code = data.facility_code
           this.user.user_name = data.user_name
