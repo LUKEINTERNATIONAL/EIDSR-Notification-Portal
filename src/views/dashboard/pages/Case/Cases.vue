@@ -40,11 +40,9 @@
           </tr>
         </thead>
 
-        <tbody
-         v-for="_case in cases"
-         :key="_case.id"
-        >
-          <tr>
+        <tbody>
+          <tr v-for="_case in cases"
+           :key="_case.id">
             <td>{{_case.id}}</td>
             <td>{{_case.facility_code}}</td>
             <td>{{_case.condition_name}}</td>

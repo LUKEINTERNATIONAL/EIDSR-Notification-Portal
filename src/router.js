@@ -22,7 +22,7 @@ const router = new Router({
         {
           name: 'User Profile',
           path: 'pages/user',
-          component: () => import('@/views/dashboard/pages/UserProfile'),
+          component: () => import('@/views/dashboard/pages/User/UserProfile'),
         },
         {
           name: 'Add Respondent',

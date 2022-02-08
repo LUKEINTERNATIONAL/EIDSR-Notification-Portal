@@ -53,11 +53,9 @@
           </tr>
         </thead>
 
-        <tbody
-         v-for="respondent in respondents"
-         :key="respondent.id"
-        >
-          <tr>
+        <tbody>
+          <tr v-for="respondent in respondents"
+            :key="respondent.id">
             <td>{{respondent.id}}</td>
             <td>{{respondent.first_name+" "+respondent.last_name}}</td>
             <td>{{respondent.facility_code}}</td>

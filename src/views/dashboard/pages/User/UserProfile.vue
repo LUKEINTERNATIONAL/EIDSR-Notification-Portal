@@ -142,7 +142,7 @@
 </template>
 
 <script>
-import userService from '../../../services/UserService'
+import userService from '../../../../services/UserService'
 export default {
     data() {
       return {

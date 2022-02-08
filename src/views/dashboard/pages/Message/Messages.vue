@@ -39,11 +39,10 @@
           </tr>
         </thead>
 
-        <tbody
-         v-for="message in messages"
-         :key="message.id"
-        >
-          <tr>
+        <tbody>
+          <tr v-for="message in messages"
+              :key="message.id">
+
             <td>{{message.id}}</td>
             <td>{{message.respondent_id}}</td>
             <td>{{message.body}}</td>
