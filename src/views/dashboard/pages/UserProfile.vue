@@ -122,9 +122,12 @@
                   cols="12"
                   class="text-right"
                 >
+
+                <div class="error1" v-html="error" style="float: left"/>
                   <v-btn
                     color="success"
                     class="mr-0"
+                    @click="saveUpdatedUserDetails"
                   >
                     Update Profile
                   </v-btn>
@@ -155,31 +158,35 @@ export default {
           },
           about: this.about,
           phone_sec: this.phone_sec,
-          user_name: this.user_name,
 
           error: null,
+          userID: this.$store.state.user.id,
           rules: {
             required: (value) => !!value || 'Required.'
           }
       }
     },
     methods: {
-      logout(){
-      //unset login state
-      this.$store.dispatch('setToken', null)
-      this.$store.dispatch('setUser', null)
-      //redirect
-      this.$router.push({
-        name: 'login'
-      })
-    }
+      async saveUpdatedUserDetails() {
+        try {
+          Object.assign(this.user, this.about)
+          Object.assign(this.user, this.phone_sec)
+
+          await userService.put(this.user, this.userID)
+          this.$router.push({
+            name: 'Dashboard'
+          })
+        } catch (err) {
+          this.error = err.response.data.error
+        }
+      }
     },
     async mounted() {
       console.log("...")
       this.error = null
-      const id = this.$store.state.user.id
+     
       try {
-          const data = (await userService.show(id)).data
+          const data = (await userService.show(this.userID)).data
 
           this.user.id = data.id
           this.user.email = data.email
@@ -192,12 +199,14 @@ export default {
           this.user.user_name = data.user_name
           this.user.phone_sec = data.phone_sec
           this.user.about = data.about
-
-          console.log("data: ",data)
-          
       } catch (err) {
           console.log(err.response.data.error)
       }
     }
   }
 </script>
+<style scoped>
+.error1 {
+  color: red;
+}
+</style>
