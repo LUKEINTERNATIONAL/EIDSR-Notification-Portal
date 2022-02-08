@@ -136,6 +136,10 @@
             <v-icon>mdi-account-edit</v-icon>Edit Profile</v-list-item>
 
             <v-list-item class="vli-c"
+             to="/pages/change-password">
+            <v-icon>mdi-lock</v-icon>Change Password</v-list-item>
+
+            <v-list-item class="vli-c"
              @click="logout">
               <v-icon>mdi-axe</v-icon>Logout</v-list-item>
           

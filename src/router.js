@@ -25,6 +25,11 @@ const router = new Router({
           component: () => import('@/views/dashboard/pages/User/UserProfile'),
         },
         {
+          name: 'Change Password',
+          path: 'pages/change-password',
+          component: () => import('@/views/dashboard/pages/User/ChangePassword'),
+        },
+        {
           name: 'Add Respondent',
           path: 'pages/addrespondent',
           component: () => import('@/views/dashboard/pages/Respondent/AddRespondent'),

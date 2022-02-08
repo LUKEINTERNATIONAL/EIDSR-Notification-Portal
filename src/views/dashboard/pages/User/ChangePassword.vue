@@ -23,35 +23,27 @@
           <v-form>
             <v-container class="py-0">
               <v-row>
+
                 <v-col
                   cols="12"
-                  md="4"
+                  md="6"
                 >
                   <v-text-field
-                    label="Company (disabled)"
-                    disabled
+                    label="Current Password"
+                    class="purple-input"
+                    v-model="current_password"
                   />
                 </v-col>
 
                 <v-col
                   cols="12"
-                  md="4"
+                  md="6"
+                  class="text-right"
                 >
                   <v-text-field
+                    label="New Password"
                     class="purple-input"
-                    label="User Name"
-                    v-model="user.username"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Email Address"
-                    class="purple-input"
-                    v-model="user.email"
+                    v-model="new_password_first"
                   />
                 </v-col>
 
@@ -60,61 +52,9 @@
                   md="6"
                 >
                   <v-text-field
-                    label="First Name"
+                    label="New Password"
                     class="purple-input"
-                    v-model="user.first_name"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-text-field
-                    label="Last Name"
-                    class="purple-input"
-                    v-model="user.last_name"
-                  />
-                </v-col>
-
-                <v-col cols="12">
-                  <v-text-field
-                    label="Adress"
-                    class="purple-input"
-                    v-model="user.address"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    class="purple-input"
-                    required
-                    label="Phone (primary)"
-                    type="number"
-                    v-model="user.phone_pri"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    class="purple-input"
-                    label="Phone (secondary)"
-                    type="number"
-                   v-model="user.phone_sec"
-                  />
-                </v-col>
-
-                <v-col cols="12">
-                  <v-textarea
-                    class="purple-input"
-                    label="About Me"
-                    v-model="user.about"
+                    v-model="new_password_second"
                   />
                 </v-col>
 
@@ -146,28 +86,34 @@ import userService from '../../../../services/UserService'
 export default {
     data() {
       return {
-          user: {
-            password: this.password
-          },
-
-          error: null,
-          userID: this.$store.state.user.id,
-          rules: {
-            required: (value) => !!value || 'Required.'
-          }
+        current_password: this.current_password,
+        new_password_first: this.new_password_first,
+        new_password_second: this.new_password_second,
+        error: null,
+        userID: this.$store.state.user.id,
+        rules: {
+          required: (value) => !!value || 'Required.'
+        }
       }
     },
     methods: {
       async saveUpdatedUserPassword() {
-        try {
-          await userService.put(this.user, this.userID)
-          this.$router.push({
-            name: 'Dashboard'
-          })
-        } catch (err) {
-          this.error = err.response.data.error
+        if(this.new_password_first !== this.new_password_second) {
+          this.error = "newly entred passwords do not match"
+          console.log(this.error)
+          return
+        } else {
+          this.error = null
         }
-      }
+        // try {
+        //   await userService.put(this.user, this.userID)
+        //   this.$router.push({
+        //     name: 'Dashboard'
+        //   })
+        // } catch (err) {
+        //   this.error = err.response.data.error
+        // }
+      },
     },
   }
 </script>
