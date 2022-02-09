@@ -98,9 +98,9 @@ export default {
     },
     methods: {
       async saveUpdatedUserPassword() {
+        console.log("STATUS: ", this.$store.state.isUserLoggedIn)
         if(this.new_password_first !== this.new_password_second) {
           this.error = "newly entred passwords do not match"
-          console.log(this.error)
           return
         } else {
           this.error = null

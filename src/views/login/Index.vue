@@ -65,6 +65,7 @@ export default {
       email: '',
       password: '',
       error: null,
+       connectionStatus: false,
       image: {
       msg: 'msg.jpg',
       background: 'login.jpg',
@@ -75,19 +76,38 @@ export default {
     }
   },
   methods: {
-    async login () {
-      try {
-        const response = await AuthenticationService.login({
-          email: this.email,
-          password: this.password
-        })
-        this.$store.dispatch('setToken', response.data.token)
-        this.$store.dispatch('setUser', response.data.user)
-        this.$router.push({
-          name: 'Dashboard'
-        })
+    async login() {
+      if(!this.connectionStatus) {
+        this.tryToConnect()
+        this.sendRequest()
+      }
+
+    },
+    tryToConnect(){
+      var counter = 0
+      var i = setInterval(function(){
+          this.sendRequest()
+          counter++;
+          if(counter === 10) {
+              clearInterval(i);
+          }
+      }, 1000);
+    },
+    async sendRequest() {
+        try {
+          const response = await AuthenticationService.login({
+            email: this.email,
+            password: this.password
+          })
+          this.$store.dispatch('setToken', response.data.token)
+          this.$store.dispatch('setUser', response.data.user)
+          this.connectionStatus = true
+          this.$router.push({
+            name: 'Dashboard'
+          })
       } catch (error) {
-        this.error = error.response.data.error
+          this.connectionStatus = true
+          this.error = error.response.data.error
       }
     }
   }
