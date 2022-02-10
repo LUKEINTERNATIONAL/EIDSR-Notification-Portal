@@ -12,11 +12,11 @@
         <base-material-card>
           <template v-slot:heading>
             <div class="display-2 font-weight-light">
-              Edit Profile
+              Change Password
             </div>
 
             <div class="subtitle-1 font-weight-light">
-              Complete your profile
+              Enter your curent and new password 
             </div>
           </template>
 
@@ -83,6 +83,8 @@
 
 <script>
 import userService from '../../../../services/UserService'
+import AuthenticationService from '../../../../services/AuthenticationService'
+
 export default {
     data() {
       return {
@@ -98,21 +100,34 @@ export default {
     },
     methods: {
       async saveUpdatedUserPassword() {
-        console.log("STATUS: ", this.$store.state.isUserLoggedIn)
         if(this.new_password_first !== this.new_password_second) {
           this.error = "newly entred passwords do not match"
           return
+
         } else {
           this.error = null
+
+          try {
+            const response = await AuthenticationService.login({
+              email: this.$store.state.user.email,
+              password: this.current_password
+            })
+            if (response) {
+              try {
+                await userService.put({
+                  password: this.new_password_first
+                }, this.userID)
+                this.$router.push({
+                  name: 'Dashboard'
+                })
+              } catch (error) {
+                this.error = error.response.data.error
+              }
+            }
+          } catch (error) {
+              this.error = error.response.data.error
+          }
         }
-        // try {
-        //   await userService.put(this.user, this.userID)
-        //   this.$router.push({
-        //     name: 'Dashboard'
-        //   })
-        // } catch (err) {
-        //   this.error = err.response.data.error
-        // }
       },
     },
   }

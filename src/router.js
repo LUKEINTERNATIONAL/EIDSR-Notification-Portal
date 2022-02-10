@@ -93,8 +93,6 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {
-  console.log("isUserLoggedIn: ", store.state.isUserLoggedIn)
-  console.log("to.name: ", to.name)
   if ( store.state.isUserLoggedIn == true && to.name == 'login') {
     next({name: 'Dashboard'})
   } else {

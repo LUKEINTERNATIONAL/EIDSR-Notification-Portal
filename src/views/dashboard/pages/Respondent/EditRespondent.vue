@@ -200,7 +200,6 @@ export default {
       }
     },
      async mounted() {
-         console.log("...")
          this.error = null
          const id = this.$store.state.respondentIdEdit
          try {

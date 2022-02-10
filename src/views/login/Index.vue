@@ -78,7 +78,7 @@ export default {
   methods: {
     async login() {
       if(!this.connectionStatus) {
-        this.tryToConnect()
+        //this.tryToConnect()
         this.sendRequest()
       }
 

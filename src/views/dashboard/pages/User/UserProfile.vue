@@ -172,7 +172,8 @@ export default {
           Object.assign(this.user, this.about)
           Object.assign(this.user, this.phone_sec)
 
-          await userService.put(this.user, this.userID)
+          const response = await userService.put(this.user, this.userID)
+          this.$store.dispatch('setUser', response.data.user)
           this.$router.push({
             name: 'Dashboard'
           })
@@ -182,7 +183,6 @@ export default {
       }
     },
     async mounted() {
-      console.log("...")
       this.error = null
      
       try {
