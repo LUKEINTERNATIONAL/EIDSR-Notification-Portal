@@ -77,11 +77,11 @@ export default {
   },
   methods: {
     async login() {
-      if(!this.connectionStatus) {
-        //this.tryToConnect()
-        this.sendRequest()
-      }
-
+      // if(!this.connectionStatus) {
+      //   //this.tryToConnect()
+      //   this.sendRequest()
+      // }
+      this.sendRequest()
     },
     tryToConnect(){
       var counter = 0
@@ -101,12 +101,12 @@ export default {
           })
           this.$store.dispatch('setToken', response.data.token)
           this.$store.dispatch('setUser', response.data.user)
-          this.connectionStatus = true
+          //this.connectionStatus = true
           this.$router.push({
             name: 'Dashboard'
           })
       } catch (error) {
-          this.connectionStatus = true
+         // this.connectionStatus = true
           this.error = error.response.data.error
       }
     }

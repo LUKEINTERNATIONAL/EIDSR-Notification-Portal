@@ -30,7 +30,7 @@
 
     <v-spacer />
 
-    <v-text-field
+    <!-- <v-text-field
       :label="$t('search')"
       color="secondary"
       hide-details
@@ -49,7 +49,7 @@
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
       </template>
-    </v-text-field>
+    </v-text-field> -->
 
     <div class="mx-3" />
 
@@ -104,6 +104,40 @@
           </app-bar-item>
         </div>
       </v-list>
+    </v-menu>
+
+    <v-menu
+    bottom
+      left
+      offset-y
+      origin="top right"
+      transition="scale-transition"
+    >
+
+      <template v-slot:activator="{ attrs, on }">
+        <v-btn
+          class="ml-2"
+          min-width="0"
+          text
+          v-bind="attrs"
+          v-on="on"
+        >
+
+          <v-icon>mdi-cog</v-icon>
+         
+        </v-btn>
+      </template>
+
+        <v-list
+        :tile="false"
+        nav
+      >   
+        <v-list-item class="vli-c"
+          to="/pages/change-password">
+        <v-icon>mdi-lock</v-icon>Message Body Settings</v-list-item>
+          
+      </v-list>
+
     </v-menu>
 
     <v-menu
