@@ -54,11 +54,11 @@
           </template>
 
           <h4 class="card-title font-weight-light mt-2 ml-2">
-            Website Views
+            Diagnosis
           </h4>
 
           <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            Last Campaign Performance
+            iDRS cases across the country
           </p>
 
           <template v-slot:actions>
@@ -90,7 +90,7 @@
                 <v-btn
                   v-bind="attrs"
                   color="info"
-                  icon
+                  iconsales
                   v-on="on"
                 >
                   <v-icon
@@ -121,7 +121,7 @@
           </template>
 
           <h4 class="card-title font-weight-light mt-2 ml-2">
-            Daily Sales
+            Daily SMS
           </h4>
 
           <p class="d-inline-flex font-weight-light ml-2 mt-1">
@@ -132,7 +132,7 @@
               mdi-arrow-up
             </v-icon>
             <span class="green--text">55%</span>&nbsp;
-            increase in today's sales
+            increase in today's SMS
           </p>
 
           <template v-slot:actions>
@@ -195,11 +195,18 @@
           </template>
 
           <h3 class="card-title font-weight-light mt-2 ml-2">
-            Completed Tasks
+            Daily Emails
           </h3>
 
           <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            Last Last Campaign Performance
+            <v-icon
+              color="green"
+              small
+            >
+              mdi-arrow-up
+            </v-icon>
+            <span class="green--text">55%</span>&nbsp;
+            increase in today's Emails
           </p>
 
           <template v-slot:actions>
@@ -223,11 +230,11 @@
         >
           <template v-slot:heading>
             <div class="display-2 font-weight-light">
-              Employees Stats
+              Respondets Stats
             </div>
 
             <div class="subtitle-1 font-weight-light">
-              New employees on 15th September, 2016
+              Individuals who will receive IDRS SMS and Emails 
             </div>
           </template>
           <v-card-text>
@@ -331,6 +338,8 @@
 </template>
 
 <script>
+import caseService from "./../../services/CaseService"
+
   export default {
     name: 'DashboardDashboard',
 
@@ -341,6 +350,7 @@
             labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
             series: [
               [12, 17, 7, 17, 23, 18, 38],
+              [6, 8, 3, 8, 11, 9, 50],
             ],
           },
           options: {
@@ -359,9 +369,10 @@
         },
         dataCompletedTasksChart: {
           data: {
-            labels: ['12am', '3pm', '6pm', '9pm', '12pm', '3am', '6am', '9am'],
+            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
             series: [
-              [230, 750, 450, 300, 280, 240, 200, 190],
+              [230, 750, 450, 300, 280, 240, 200],
+              [115, 375, 225, 100, 140, 20, 100],
             ],
           },
           options: {
@@ -388,7 +399,7 @@
           },
           options: {
             axisX: {
-              showGrid: false,
+              showGrid: true,
             },
             low: 0,
             high: 1000,
@@ -529,7 +540,23 @@
         },
       }
     },
+  async mounted() {
+    this.cases = (await caseService.getYearCases()).data
+    const  todayDate = new Date();
+    const  anotherDate = new Date();
+    // console.log(todayDate.toISOString());
+    todayDate.setDate(todayDate.getDate() - 365);
+    // const startDate = todayDate.setTime(todayDate.getTime() - 3*28*24*60*60);
 
+    let startDate = new Date();
+         startDate = startDate.toISOString().slice(0, 10);
+        let endDate = new Date();
+        endDate.setDate(endDate.getDate() - 365);
+        endDate = endDate.toISOString().slice(0, 10);
+    console.log(startDate);
+    console.log(endDate);
+    console.log(this.cases);
+  },
     methods: {
       complete (index) {
         this.list[index] = !this.list[index]
