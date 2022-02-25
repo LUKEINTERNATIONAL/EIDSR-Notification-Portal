@@ -103,6 +103,6 @@ vuetify-material-dashboard
 │       └── example.spec.js
 ├── vue.config.js
 ```
-# use `npm install --legacy-peer-deps` for installing dependcies
+# use `npm install --legacy-peer-deps` for installing dependencies
 
 # use `npm run serve` to run the app while in root dir
