@@ -106,7 +106,7 @@
                   />
                 </v-col>
 
-                <v-col
+                <!-- <v-col
                   cols="12"
                   md="4"
                 >
@@ -117,7 +117,7 @@
                     :rules="[rules.required]"
                    v-model="respondent.facility_code"
                   />
-                </v-col>
+                </v-col> -->
 
                 <v-col cols="12">
                   <v-textarea
