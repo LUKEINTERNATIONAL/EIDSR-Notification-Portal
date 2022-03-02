@@ -31,7 +31,8 @@
           contain
         >
           <v-img
-            src="https://demos.creative-tim.com/vuetify-material-dashboard/faviconlllllll"
+            style="padding: 19px"
+            v-bind:src="image.msg"
             max-height="30"
           />
         </v-list-item-avatar>
@@ -149,6 +150,9 @@
           to: '/components/notifications',
         },
       ],
+      image: {
+      msg: 'msg.jpg'
+      }
     }),
 
     computed: {
