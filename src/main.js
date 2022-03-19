@@ -26,6 +26,10 @@ import SvgIcon from '@jamescoyle/vue-icon'
 import  mdiAccount  from '@mdi/js'
 import VueLoading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import Multiselect from 'vue-multiselect'
+
+// register globally
+Vue.component('multiselect', Multiselect)
 
 const router = Router
 

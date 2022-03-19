@@ -36,7 +36,7 @@
               Name
             </th>
             <th class="primary--text">
-              Facility
+              Role
             </th>
             <th class="primary--text">
               Phone (primary)
@@ -54,11 +54,11 @@
         </thead>
 
         <tbody>
-          <tr v-for="respondent in respondents"
+          <tr v-for="respondent of respondents"
             :key="respondent.id">
             <td>{{respondent.id}}</td>
             <td>{{respondent.first_name+" "+respondent.last_name}}</td>
-            <td>{{respondent.facility_code}}</td>
+            <td>{{respondent.role_name}}</td>
             <td>{{respondent.phone_pri}}</td>
             <td>{{respondent.phone_sec}}</td>
             <td>{{respondent.email}}</td>
@@ -90,12 +90,14 @@
 
 <script>
 import respondentService from '../../../../services/RespondentService'
+import roleService from '../../../../services/RoleService'
 
 export default {
   components: {  },
   data() {
     return {
-      respondents: null
+      respondents: null,
+      respondents_cp: null
     }
   },
   methods: {
@@ -107,7 +109,6 @@ export default {
       if(confirm("Do you really want to delete?")){
         try {
           const respondent = (await respondentService.delete(id)).data
-
           if(!!respondent)
             this.$router.go(this.$router.currentRoute)
         } catch (err) {
@@ -125,11 +126,25 @@ export default {
       width: 100,
       height: 64,
     });
-    this.respondents = (await respondentService.index()).data
-     if (!!this.respondents) {
-     loader.hide()
+    const roles = (await roleService.index()).data
+    const data = (await respondentService.index()).data
+     if (!!data) {
+        if(roles){
+          for(let role of roles) {
+              data.forEach(respondent_cp => {
+                if (respondent_cp.role_id == role.role_id) {
+                  let role_name = {
+                  role_name: role.role_name
+                }
+                Object.assign(respondent_cp, role_name)
+                }
+              });
+          }
+        }
+    loader.hide()
     }
-  },
+    this.respondents = data
+  }
 }
 </script>
 </script>
