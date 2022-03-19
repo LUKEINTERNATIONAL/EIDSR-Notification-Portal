@@ -130,12 +130,12 @@ export default {
      if (!!data) {
         if(roles){
           for(let role of roles) {
-              data.forEach(respondent => {
+              data.forEach(respondent_cp => {
                 if (respondent_cp.role_id == role.role_id) {
                   let role_name = {
                   role_name: role.role_name
                 }
-                Object.assign(respondent, role_name)
+                Object.assign(respondent_cp, role_name)
                 }
               });
           }
