@@ -26,6 +26,7 @@ import SvgIcon from '@jamescoyle/vue-icon'
 import  mdiAccount  from '@mdi/js'
 import VueLoading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import VueApexCharts from 'vue-apexcharts'
 
 const router = Router
 
@@ -34,6 +35,9 @@ Vue.config.productionTip = false
 sync(store, router)
 
 Vue.use(VueLoading)
+Vue.use(VueApexCharts)
+
+Vue.component('apexchart', VueApexCharts)
 
 new Vue({
   router,

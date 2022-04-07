@@ -5,15 +5,7 @@
     v-on="$listeners"
   >
     <template v-slot:heading>
-      <chartist
-        :data="data"
-        :event-handlers="eventHandlers"
-        :options="options"
-        :ratio="ratio"
-        :responsive-options="responsiveOptions"
-        :type="type"
-        style="max-height: 150px;"
-      />
+     <h2>{{title}}</h2>
     </template>
 
     <slot
@@ -61,6 +53,10 @@
         type: String,
         required: true,
         validator: v => ['Bar', 'Line', 'Pie'].includes(v),
+      },
+      title: {
+        type: String,
+        required: true,
       },
     },
   }

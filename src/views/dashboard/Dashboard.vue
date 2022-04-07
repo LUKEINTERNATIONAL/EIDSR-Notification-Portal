@@ -10,13 +10,14 @@
         lg="4"
       >
         <base-material-chart-card
-          :data="emailsSubscriptionChart.data"
-          :options="emailsSubscriptionChart.options"
-          :responsive-options="emailsSubscriptionChart.responsiveOptions"
           color="#E91E63"
           hover-reveal
           type="Bar"
+          title="Notifiable Disease Conditions Graph"
         >
+        <div id="chart">
+        <apexchart type="bar" height="295" :options="barChartOptions" :series="barSeries"></apexchart>
+      </div>
           <template v-slot:reveal-actions>
             <v-tooltip bottom>
               <template v-slot:activator="{ attrs, on }">
@@ -58,7 +59,12 @@
           </h4>
 
           <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            iDRS cases across the country
+            IDRS cases across the country
+                <v-btn
+                    style="margin-left: 33px; background-color:rgb(104, 104, 104);; height:20px"
+                    @click="deleteMessage(message.id)"
+                > View more
+                </v-btn>
           </p>
 
           <template v-slot:actions>
@@ -68,7 +74,7 @@
             >
               mdi-clock-outline
             </v-icon>
-            <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
+            <span class="caption grey--text font-weight-light">Updated 10 minutes ago</span>
           </template>
         </base-material-chart-card>
       </v-col>
@@ -78,12 +84,14 @@
         lg="4"
       >
         <base-material-chart-card
-          :data="dailySalesChart.data"
-          :options="dailySalesChart.options"
           color="success"
           hover-reveal
           type="Line"
+          title="SMS Graph"
         >
+         <div id="chart">
+        <apexchart type="line" height="300" :options="lineChartOptions1" :series="lineSeries1"></apexchart>
+      </div>
           <template v-slot:reveal-actions>
             <v-tooltip bottom>
               <template v-slot:activator="{ attrs, on }">
@@ -135,6 +143,7 @@
             increase in today's SMS
           </p>
 
+     
           <template v-slot:actions>
             <v-icon
               class="mr-1"
@@ -142,7 +151,7 @@
             >
               mdi-clock-outline
             </v-icon>
-            <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
+            <span class="caption grey--text font-weight-light">Updated 4 minutes ago</span>
           </template>
         </base-material-chart-card>
       </v-col>
@@ -152,12 +161,14 @@
         lg="4"
       >
         <base-material-chart-card
-          :data="dataCompletedTasksChart.data"
-          :options="dataCompletedTasksChart.options"
           hover-reveal
           color="info"
           type="Line"
+          title="Email Graph"
         >
+         <div id="chart">
+        <apexchart type="line" height="300" :options="lineChartOptions2" :series="lineSeries2"></apexchart>
+      </div>
           <template v-slot:reveal-actions>
             <v-tooltip bottom>
               <template v-slot:activator="{ attrs, on }">
@@ -216,7 +227,7 @@
             >
               mdi-clock-outline
             </v-icon>
-            <span class="caption grey--text font-weight-light">campaign sent 26 minutes ago</span>
+            <span class="caption grey--text font-weight-light">Updated 26 minutes ago</span>
           </template>
         </base-material-chart-card>
       </v-col>
@@ -230,7 +241,7 @@
         >
           <template v-slot:heading>
             <div class="display-2 font-weight-light">
-              Respondets Stats
+              Respondets Stats 
             </div>
 
             <div class="subtitle-1 font-weight-light">
@@ -239,8 +250,8 @@
           </template>
           <v-card-text>
             <v-data-table
-              :headers="headers"
-              :items="items"
+              :headers="respondentsHeaders"
+              :items="respondentsItems"
             />
           </v-card-text>
         </base-material-card>
@@ -250,87 +261,26 @@
         cols="12"
         md="6"
       >
-        <base-material-card class="px-5 py-3">
+      
+      <base-material-card
+          color="error"
+          class="px-5 py-3"
+        >
           <template v-slot:heading>
-            <v-tabs
-              v-model="tabs"
-              background-color="transparent"
-              slider-color="white"
-            >
-              <span
-                class="subheading font-weight-light mx-3"
-                style="align-self: center"
-              >Tasks:</span>
-              <v-tab class="mr-3">
-                <v-icon class="mr-2">
-                  mdi-bug
-                </v-icon>
-                Bugs
-              </v-tab>
-              <v-tab class="mr-3">
-                <v-icon class="mr-2">
-                  mdi-code-tags
-                </v-icon>
-                Website
-              </v-tab>
-              <v-tab>
-                <v-icon class="mr-2">
-                  mdi-cloud
-                </v-icon>
-                Server
-              </v-tab>
-            </v-tabs>
+            <div class="display-2 font-weight-light">
+              Users Stats
+            </div>
+
+            <div class="subtitle-1 font-weight-light">
+              Individuals who will be using the system 
+            </div>
           </template>
-
-          <v-tabs-items
-            v-model="tabs"
-            class="transparent"
-          >
-            <v-tab-item
-              v-for="n in 3"
-              :key="n"
-            >
-              <v-card-text>
-                <template v-for="(task, i) in tasks[tabs]">
-                  <v-row
-                    :key="i"
-                    align="center"
-                  >
-                    <v-col cols="1">
-                      <v-list-item-action>
-                        <v-checkbox
-                          v-model="task.value"
-                          color="secondary"
-                        />
-                      </v-list-item-action>
-                    </v-col>
-
-                    <v-col cols="9">
-                      <div
-                        class="font-weight-light"
-                        v-text="task.text"
-                      />
-                    </v-col>
-
-                    <v-col
-                      cols="2"
-                      class="text-right"
-                    >
-                      <v-icon class="mx-1">
-                        mdi-pencil
-                      </v-icon>
-                      <v-icon
-                        color="error"
-                        class="mx-1"
-                      >
-                        mdi-close
-                      </v-icon>
-                    </v-col>
-                  </v-row>
-                </template>
-              </v-card-text>
-            </v-tab-item>
-          </v-tabs-items>
+          <v-card-text>
+            <v-data-table
+              :headers="usersHeaders"
+              :items="usersItems"
+            />
+          </v-card-text>
         </base-material-card>
       </v-col>
     </v-row>
@@ -338,90 +288,204 @@
 </template>
 
 <script>
+
 import caseService from "./../../services/CaseService"
+import RespondentService from "./../../services/RespondentService"
+import UserService from "./../../services/UserService"
 
   export default {
     name: 'DashboardDashboard',
 
     data () {
       return {
-        dailySalesChart: {
-          data: {
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-            series: [
-              [12, 17, 7, 17, 23, 18, 38],
-              [6, 8, 3, 8, 11, 9, 50],
-            ],
-          },
-          options: {
-            lineSmooth: this.$chartist.Interpolation.cardinal({
-              tension: 0,
-            }),
-            low: 0,
-            high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
+         
+         barSeries: [{
+            name: 'Rabies',
+            data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+          }, {
+            name: 'Cholera',
+            data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+          }, {
+            name: 'Yellow fever',
+            data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+          }],
+          barChartOptions: {
+            chart: {
+              type: 'bar',
+              height: 350
             },
-          },
-        },
-        dataCompletedTasksChart: {
-          data: {
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-            series: [
-              [230, 750, 450, 300, 280, 240, 200],
-              [115, 375, 225, 100, 140, 20, 100],
-            ],
-          },
-          options: {
-            lineSmooth: this.$chartist.Interpolation.cardinal({
-              tension: 0,
-            }),
-            low: 0,
-            high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-            },
-          },
-        },
-        emailsSubscriptionChart: {
-          data: {
-            labels: ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De'],
-            series: [
-              [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-
-            ],
-          },
-          options: {
-            axisX: {
-              showGrid: true,
-            },
-            low: 0,
-            high: 1000,
-            chartPadding: {
-              top: 0,
-              right: 5,
-              bottom: 0,
-              left: 0,
-            },
-          },
-          responsiveOptions: [
-            ['screen and (max-width: 640px)', {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc: function (value) {
-                  return value[0]
-                },
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'
               },
-            }],
+            },
+            dataLabels: {
+              enabled: false
+            },
+            stroke: {
+              show: true,
+              width: 2,
+              colors: ['transparent']
+            },
+            xaxis: {
+              categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            },
+            yaxis: {
+              title: {
+                text: 'Number of patients'
+              }
+            },
+            fill: {
+              opacity: 1
+            },
+            tooltip: {
+              y: {
+                formatter: function (val) {
+                  return val + " Patient(s)"
+                }
+              }
+            }
+          },
+           lineSeries1: [
+            {
+              name: "SMS sent",
+              data: [28, 29, 33, 36, 32, 32, 33]
+            },
+            {
+              name: "SMS failed",
+              data: [12, 11, 14, 18, 17, 13, 13]
+            }
           ],
-        },
-        headers: [
+          lineChartOptions1: {
+            chart: {
+              height: 350,
+              type: 'line',
+              dropShadow: {
+                enabled: true,
+                color: '#000',
+                top: 18,
+                left: 7,
+                blur: 10,
+                opacity: 0.2
+              },
+              toolbar: {
+                show: false
+              }
+            },
+            colors: ['#77B6EA', '#f07373'],
+            dataLabels: {
+              enabled: true,
+            },
+            stroke: {
+              curve: 'smooth'
+            },
+            title: {
+              text: 'SMS Status',
+              align: 'left'
+            },
+            grid: {
+              borderColor: '#e7e7e7',
+              row: {
+                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                opacity: 0.5
+              },
+            },
+            markers: {
+              size: 1
+            },
+            xaxis: {
+              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+              title: {
+                text: 'Month'
+              }
+            },
+            yaxis: {
+              title: {
+                text: 'Number of SMS'
+              },
+              min: 5,
+              max: 40
+            },
+            legend: {
+              position: 'top',
+              horizontalAlign: 'right',
+              floating: true,
+              offsetY: -25,
+              offsetX: -5
+            }
+          },
+          lineSeries2: [
+            {
+              name: "Email sent",
+              data: [28, 29, 33, 36, 32, 32, 33]
+            },
+            {
+              name: "Email failed",
+              data: [12, 11, 14, 18, 17, 13, 13]
+            }
+          ],
+          lineChartOptions2: {
+            chart: {
+              height: 350,
+              type: 'line',
+              dropShadow: {
+                enabled: true,
+                color: '#000',
+                top: 18,
+                left: 7,
+                blur: 10,
+                opacity: 0.2
+              },
+              toolbar: {
+                show: false
+              }
+            },
+            colors: ['#77B6EA', '#f07373'],
+            dataLabels: {
+              enabled: true,
+            },
+            stroke: {
+              curve: 'smooth'
+            },
+            title: {
+              text: 'Email status',
+              align: 'left'
+            },
+            grid: {
+              borderColor: '#e7e7e7',
+              row: {
+                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                opacity: 0.5
+              },
+            },
+            markers: {
+              size: 1
+            },
+            xaxis: {
+              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+              title: {
+                text: 'Month'
+              }
+            },
+            yaxis: {
+              title: {
+                text: 'Number of Emails'
+              },
+              min: 5,
+              max: 40
+            },
+            legend: {
+              position: 'top',
+              horizontalAlign: 'right',
+              floating: true,
+              offsetY: -25,
+              offsetX: -5
+            }
+          },
+       
+            usersHeaders: [
           {
             sortable: false,
             text: 'ID',
@@ -434,133 +498,134 @@ import caseService from "./../../services/CaseService"
           },
           {
             sortable: false,
-            text: 'Salary',
-            value: 'salary',
+            text: 'Username',
+            value: 'username',
             align: 'right',
           },
           {
             sortable: false,
-            text: 'Country',
-            value: 'country',
+            text: 'Address',
+            value: 'address',
             align: 'right',
           },
           {
             sortable: false,
-            text: 'City',
-            value: 'city',
+            text: 'Phone',
+            value: 'phone',
+            align: 'right',
+          },
+          {
+            sortable: false,
+            text: 'Email',
+            value: 'email',
+            align: 'right',
+          },
+          {
+            sortable: false,
+            text: 'About',
+            value: 'about',
             align: 'right',
           },
         ],
-        items: [
-          {
-            id: 1,
-            name: 'Dakota Rice',
-            country: 'Niger',
-            city: 'Oud-Tunrhout',
-            salary: '$35,738',
+        usersItems: [],
+        respondentsHeaders: [
+         {
+            sortable: false,
+            text: 'ID',
+            value: 'id',
           },
           {
-            id: 2,
-            name: 'Minerva Hooper',
-            country: 'Curaçao',
-            city: 'Sinaai-Waas',
-            salary: '$23,738',
+            sortable: false,
+            text: 'Name',
+            value: 'name',
           },
           {
-            id: 3,
-            name: 'Sage Rodriguez',
-            country: 'Netherlands',
-            city: 'Overland Park',
-            salary: '$56,142',
+            sortable: false,
+            text: 'Role',
+            value: 'role',
+            align: 'right',
           },
           {
-            id: 4,
-            name: 'Philip Chanley',
-            country: 'Korea, South',
-            city: 'Gloucester',
-            salary: '$38,735',
+            sortable: false,
+            text: 'Phone',
+            value: 'phone',
+            align: 'right',
           },
           {
-            id: 5,
-            name: 'Doris Greene',
-            country: 'Malawi',
-            city: 'Feldkirchen in Kārnten',
-            salary: '$63,542',
+            sortable: false,
+            text: 'Email',
+            value: 'email',
+            align: 'right',
           },
         ],
-        tabs: 0,
-        tasks: {
-          0: [
-            {
-              text: 'Sign contract for "What are conference organizers afraid of?"',
-              value: true,
-            },
-            {
-              text: 'Lines From Great Russian Literature? Or E-mails From My Boss?',
-              value: false,
-            },
-            {
-              text: 'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit',
-              value: false,
-            },
-            {
-              text: 'Create 4 Invisible User Experiences you Never Knew About',
-              value: true,
-            },
-          ],
-          1: [
-            {
-              text: 'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit',
-              value: true,
-            },
-            {
-              text: 'Sign contract for "What are conference organizers afraid of?"',
-              value: false,
-            },
-          ],
-          2: [
-            {
-              text: 'Lines From Great Russian Literature? Or E-mails From My Boss?',
-              value: false,
-            },
-            {
-              text: 'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit',
-              value: true,
-            },
-            {
-              text: 'Sign contract for "What are conference organizers afraid of?"',
-              value: true,
-            },
-          ],
-        },
-        list: {
-          0: false,
-          1: false,
-          2: false,
-        },
+        respondentsItems: [],
+        
       }
     },
   async mounted() {
-    this.cases = (await caseService.getYearCases()).data
-    const  todayDate = new Date();
-    const  anotherDate = new Date();
-    // console.log(todayDate.toISOString());
-    todayDate.setDate(todayDate.getDate() - 365);
-    // const startDate = todayDate.setTime(todayDate.getTime() - 3*28*24*60*60);
-
-    let startDate = new Date();
-         startDate = startDate.toISOString().slice(0, 10);
-        let endDate = new Date();
-        endDate.setDate(endDate.getDate() - 365);
-        endDate = endDate.toISOString().slice(0, 10);
-    console.log(startDate);
-    console.log(endDate);
-    console.log(this.cases);
+    
+    await this.getRespondents();
+    this.getCases();
+    this.getUsers();
   },
     methods: {
       complete (index) {
         this.list[index] = !this.list[index]
+        },
+        async getRespondents(){
+        let allRespondent = [];
+        let allRoles = await RespondentService.index();
+        allRoles.data.map((value)=>{
+          const roleName = value.role_name	
+          let data = value.Respondents.map((value)=>{
+            return {
+              id: value.id ,
+              name: value.first_name+" "+ value.last_name ,
+              phone : value.phone_pri+" "+ value.phone_sec ,
+              role : roleName,
+              email: value.email ,
+            }
+          })
+          allRespondent.push(...data)
+          return data
+        })
+        this.respondentsItems = allRespondent
       },
-    },
+      async getCases(){
+        this.cases = (await caseService.getYearCases()).data
+        const  todayDate = new Date();
+        const  anotherDate = new Date();
+        // console.log(todayDate.toISOString());
+        todayDate.setDate(todayDate.getDate() - 365);
+        // const startDate = todayDate.setTime(todayDate.getTime() - 3*28*24*60*60);
+
+        let startDate = new Date();
+            startDate = startDate.toISOString().slice(0, 10);
+            let endDate = new Date();
+            endDate.setDate(endDate.getDate() - 365);
+            endDate = endDate.toISOString().slice(0, 10);
+        console.log(startDate);
+        console.log(endDate);
+        console.log(this.cases);
+      },
+      async getUsers(){
+        const data = await (await UserService.index()).data;
+        const userData = data.map((value)=>{
+          return {
+            id: value.id,
+            name: value.first_name+" "+value.last_name,
+            username: value.username,
+            address: value.address,
+            phone: value.phone_pri+" "+value.phone_sec,
+            email: value.email,
+            about: value.about,
+          }
+        })
+        this.usersItems = userData;
+
+      }
+      },
+      
+
   }
 </script>
