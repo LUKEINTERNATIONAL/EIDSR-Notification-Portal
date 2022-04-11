@@ -16,7 +16,7 @@
           title="Notifiable Disease Conditions Graph"
         >
         <div id="chart">
-        <apexchart type="bar" height="295" :options="barChartOptions" :series="barSeries"></apexchart>
+        <apexchart type="bar" height="300" :options="barChartOptions" :series="barSeries"></apexchart>
       </div>
           <template v-slot:reveal-actions>
             <v-tooltip bottom>
@@ -54,27 +54,20 @@
             </v-tooltip>
           </template>
 
-          <h4 class="card-title font-weight-light mt-2 ml-2">
-            Diagnosis
-          </h4>
-
-          <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            IDRS cases across the country
-                <v-btn
-                    style="margin-left: 33px; background-color:rgb(104, 104, 104);; height:20px"
-                    @click="deleteMessage(message.id)"
-                > View more
-                </v-btn>
-          </p>
 
           <template v-slot:actions>
-            <v-icon
-              class="mr-1"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">Updated 10 minutes ago</span>
+           <div class="view-more-btn" style="display: flex; justify-content: space-between;width: 100%;">
+               <p>
+                <v-icon class="mr-1" small> mdi-clock-outline </v-icon>
+                <span class="caption grey--text font-weight-light">Updated 4 minutes ago</span>
+               </p>
+              
+                <v-btn
+                    style="margin-left: 33px; background-color:#999; height:30px; text-transform: capitalize; font-size: 14px;min-width: 50px;padding: 5px !important;"
+                    @click="deleteMessage(message.id)"
+                > <v-icon> mdi-pencil </v-icon> Edit
+                </v-btn>
+            </div>
           </template>
         </base-material-chart-card>
       </v-col>
@@ -128,30 +121,21 @@
             </v-tooltip>
           </template>
 
-          <h4 class="card-title font-weight-light mt-2 ml-2">
-            Daily SMS
-          </h4>
-
-          <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            <v-icon
-              color="green"
-              small
-            >
-              mdi-arrow-up
-            </v-icon>
-            <span class="green--text">55%</span>&nbsp;
-            increase in today's SMS
-          </p>
 
      
           <template v-slot:actions>
-            <v-icon
-              class="mr-1"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">Updated 4 minutes ago</span>
+             <div class="view-more-btn" style="display: flex; justify-content: space-between;width: 100%;">
+               <p>
+                <v-icon class="mr-1" small> mdi-clock-outline </v-icon>
+                <span class="caption grey--text font-weight-light">Updated 4 minutes ago</span>
+               </p>
+              
+                <v-btn
+                    style="margin-left: 33px; background-color:#999; height:30px; text-transform: capitalize; font-size: 14px;min-width: 50px;padding: 5px !important;"
+                    @click="deleteMessage(message.id)"
+                > <v-icon> mdi-pencil </v-icon> Edit
+                </v-btn>
+            </div>
           </template>
         </base-material-chart-card>
       </v-col>
@@ -205,29 +189,21 @@
             </v-tooltip>
           </template>
 
-          <h3 class="card-title font-weight-light mt-2 ml-2">
-            Daily Emails
-          </h3>
-
-          <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            <v-icon
-              color="green"
-              small
-            >
-              mdi-arrow-up
-            </v-icon>
-            <span class="green--text">55%</span>&nbsp;
-            increase in today's Emails
-          </p>
+         
 
           <template v-slot:actions>
-            <v-icon
-              class="mr-1"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">Updated 26 minutes ago</span>
+             <div class="view-more-btn" style="display: flex; justify-content: space-between;width: 100%;">
+               <p>
+                <v-icon class="mr-1" small> mdi-clock-outline </v-icon>
+                <span class="caption grey--text font-weight-light">Updated 4 minutes ago</span>
+               </p>
+              
+                <v-btn
+                    style="margin-left: 33px; background-color:#999; height:30px; text-transform: capitalize; font-size: 14px;min-width: 50px;padding: 5px !important;"
+                    @click="deleteMessage(message.id)"
+                > <v-icon> mdi-pencil </v-icon> Edit
+                </v-btn>
+            </div>
           </template>
         </base-material-chart-card>
       </v-col>
@@ -239,6 +215,13 @@
           color="warning"
           class="px-5 py-3"
         >
+
+        <AdvancedSelect
+  v-model="value"
+  :options="options"
+  :disabled="disabled"
+  />
+
           <template v-slot:heading>
             <div class="display-2 font-weight-light">
               Respondets Stats 
@@ -292,23 +275,21 @@
 import caseService from "./../../services/CaseService"
 import RespondentService from "./../../services/RespondentService"
 import UserService from "./../../services/UserService"
+import MessageService from "./../../services/MessageService"
 
   export default {
     name: 'DashboardDashboard',
 
     data () {
       return {
-         
-         barSeries: [{
-            name: 'Rabies',
-            data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-          }, {
-            name: 'Cholera',
-            data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-          }, {
-            name: 'Yellow fever',
-            data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-          }],
+        options: [
+      { value: 1, text: 'One' },
+      { value: 2, text: 'Two' },
+    ],
+    value: null,
+    secondValue: '1',
+    disabled: false,
+         barSeries: [],
           barChartOptions: {
             chart: {
               type: 'bar',
@@ -330,7 +311,7 @@ import UserService from "./../../services/UserService"
               colors: ['transparent']
             },
             xaxis: {
-              categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+              categories: [],
             },
             yaxis: {
               title: {
@@ -350,12 +331,12 @@ import UserService from "./../../services/UserService"
           },
            lineSeries1: [
             {
-              name: "SMS sent",
-              data: [28, 29, 33, 36, 32, 32, 33]
+              name: "",
+              data: []
             },
             {
-              name: "SMS failed",
-              data: [12, 11, 14, 18, 17, 13, 13]
+              name: "",
+              data: []
             }
           ],
           lineChartOptions1: {
@@ -396,7 +377,7 @@ import UserService from "./../../services/UserService"
               size: 1
             },
             xaxis: {
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+              categories: [],
               title: {
                 text: 'Month'
               }
@@ -404,9 +385,7 @@ import UserService from "./../../services/UserService"
             yaxis: {
               title: {
                 text: 'Number of SMS'
-              },
-              min: 5,
-              max: 40
+              }
             },
             legend: {
               position: 'top',
@@ -418,12 +397,12 @@ import UserService from "./../../services/UserService"
           },
           lineSeries2: [
             {
-              name: "Email sent",
-              data: [28, 29, 33, 36, 32, 32, 33]
+              name: "",
+              data: []
             },
             {
-              name: "Email failed",
-              data: [12, 11, 14, 18, 17, 13, 13]
+              name: "",
+              data: []
             }
           ],
           lineChartOptions2: {
@@ -464,7 +443,7 @@ import UserService from "./../../services/UserService"
               size: 1
             },
             xaxis: {
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+              categories: [],
               title: {
                 text: 'Month'
               }
@@ -472,9 +451,7 @@ import UserService from "./../../services/UserService"
             yaxis: {
               title: {
                 text: 'Number of Emails'
-              },
-              min: 5,
-              max: 40
+              }
             },
             legend: {
               position: 'top',
@@ -563,10 +540,11 @@ import UserService from "./../../services/UserService"
       }
     },
   async mounted() {
-    
     await this.getRespondents();
-    this.getCases();
-    this.getUsers();
+    await this.getCases();
+    await this.getUsers();
+    await this.getSMS();
+    await this.getEmails();
   },
     methods: {
       complete (index) {
@@ -591,22 +569,18 @@ import UserService from "./../../services/UserService"
         })
         this.respondentsItems = allRespondent
       },
-      async getCases(){
-        this.cases = (await caseService.getYearCases()).data
-        const  todayDate = new Date();
-        const  anotherDate = new Date();
-        // console.log(todayDate.toISOString());
-        todayDate.setDate(todayDate.getDate() - 365);
-        // const startDate = todayDate.setTime(todayDate.getTime() - 3*28*24*60*60);
-
-        let startDate = new Date();
-            startDate = startDate.toISOString().slice(0, 10);
-            let endDate = new Date();
-            endDate.setDate(endDate.getDate() - 365);
-            endDate = endDate.toISOString().slice(0, 10);
-        console.log(startDate);
-        console.log(endDate);
-        console.log(this.cases);
+      async getCases(conditions = ['cholera','Smallpox','Yellow fever']){
+      
+        let totalData = (await caseService.getYearCases(conditions)).data
+        let months = totalData.pop();
+        this.barChartOptions = {...this.barChartOptions, ...{
+            xaxis: {
+                categories: months
+            }
+        }}
+        
+        this.barSeries = totalData
+       
       },
       async getUsers(){
         const data = await (await UserService.index()).data;
@@ -623,6 +597,26 @@ import UserService from "./../../services/UserService"
         })
         this.usersItems = userData;
 
+      },
+      async getEmails(){
+
+      },
+      async getSMS(){
+        var messages =(await MessageService.getYearMessages()).data
+        this.lineSeries1 = messages[0];
+        this.lineSeries2 = messages[1];
+
+         this.lineChartOptions1 = {...this.lineChartOptions1, ...{
+            xaxis: {
+                categories: messages[2]
+            }
+        }}
+         this.lineChartOptions2 = {...this.lineChartOptions2, ...{
+            xaxis: {
+                categories: messages[2]
+            }
+        }}
+        console.log(messages)
       }
       },
       
