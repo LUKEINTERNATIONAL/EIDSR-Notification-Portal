@@ -25,6 +25,7 @@ import i18n from './i18n'
 import SvgIcon from '@jamescoyle/vue-icon'
 import  mdiAccount  from '@mdi/js'
 import VueLoading from 'vue-loading-overlay';
+import Multiselect from 'vue-multiselect'
 import 'vue-loading-overlay/dist/vue-loading.css';
 import VueApexCharts from 'vue-apexcharts'
 
@@ -38,6 +39,7 @@ Vue.use(VueLoading)
 Vue.use(VueApexCharts)
 
 Vue.component('apexchart', VueApexCharts)
+Vue.component('multiselect', Multiselect)
 
 new Vue({
   router,

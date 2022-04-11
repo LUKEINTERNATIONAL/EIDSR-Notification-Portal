@@ -23,16 +23,6 @@
                   md="4"
                 >
                   <v-text-field
-                    label="Country (disabled)"
-                    disabled
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
                     class="purple-input"
                     label="User Name"
                    v-model="respondent.user_name"
@@ -88,7 +78,7 @@
                     class="purple-input"
                     required
                     label="Phone (primary)"
-                    type="number"
+                    type="text"
                     :rules="[rules.required]"
                     v-model="respondent.phone_pri"
                   />
@@ -101,7 +91,7 @@
                   <v-text-field
                     class="purple-input"
                     label="Phone (secondary)"
-                    type="number"
+                    type="text"
                    v-model="respondent.phone_sec"
                   />
                 </v-col>
@@ -175,7 +165,6 @@ export default {
             },
             about: this.about,
             phone_sec: this.phone_sec,
-
             error: null,
             rules: {
               required: (value) => !!value || 'Required.'
@@ -191,7 +180,7 @@ export default {
       let data = (await roleService.index()).data
       data = data.map(item => {
         const option = {
-          id: item.role_id,
+          id: item.id,
           name: item.role_name
         }
          return option

@@ -23,16 +23,6 @@
                   md="4"
                 >
                   <v-text-field
-                    label="Country (disabled)"
-                    disabled
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
                     class="purple-input"
                     label="User Name"
                    v-model="respondent.user_name"
@@ -88,7 +78,7 @@
                     class="purple-input"
                     required
                     label="Phone (primary)"
-                    type="number"
+                    type="text"
                     :rules="[rules.required]"
                     v-model="respondent.phone_pri"
                   />
@@ -101,29 +91,17 @@
                   <v-text-field
                     class="purple-input"
                     label="Phone (secondary)"
-                    type="number"
-                   v-model="respondent.phone_sec"
+                    type="text"
+                    v-model="respondent.phone_sec"
                   />
                 </v-col>
 
-                <!-- <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    class="purple-input"
-                    label="Facility code"
-                    type="number"
-                    :rules="[rules.required]"
-                   v-model="respondent.facility_code"
-                  />
-                </v-col> -->
                 <v-col
                   cols="12"
                   md="4"
                 >
                 <div>
-                  <multiselect :rules="[rules.required]" v-model="respondent.role_id" deselect-label="Can't remove this value" track-by="name" label="name" placeholder="Select role" :options="options" :searchable="false" :allow-empty="false">
+                  <multiselect v-model="respondent.role_id" :rules="[rules.required]" deselect-label="Can't remove this value" track-by="name" label="name" :placeholder="role_place_holder" :options="options" :searchable="false" :allow-empty="false">
                   </multiselect>
                 </div>
                 </v-col>
@@ -161,6 +139,7 @@
 
 <script>
 import respondentService from '../../../../services/RespondentService'
+import roleService from '../../../../services/RoleService'
 
 export default {
     data() {
@@ -172,20 +151,21 @@ export default {
                 phone_pri: this.phone_pri,
                 email: this.email,
                 facility_code: this.facility_code,
-                role_id: this.role_id
+                role_id: this.role_id,
+                about: this.about,
+                phone_sec: this.phone_sec,
+                user_name: this.user_name,
             },
-            about: this.about,
-            phone_sec: this.phone_sec,
-            user_name: this.user_name,
 
             error: null,
             rules: {
               required: (value) => !!value || 'Required.'
             },
-                        options: [
+            options: [
               { name: 'MOH', id: 1 },
               { name: 'Implemenation Partner', id: 2}
             ],
+            role_place_holder: this.role_place_holder
         }
     },
     methods: {
@@ -195,15 +175,12 @@ export default {
                .keys(this.respondent)
                .every(key => !!this.respondent[key])
 
-            if(!areAllFieldsFilledIn) {
-                this.error = "Please fill in the required fields."
-                return
-            }
+            // if(!areAllFieldsFilledIn) {
+            //     this.error = "Please fill in the required fields."
+            //     return
+            // }
             try {
-              Object.assign(this.respondent, this.about)
-              Object.assign(this.respondent, this.phone_sec)
-              Object.assign(this.respondent, this.user_name)
-
+              this.respondent.role_id = this.respondent.role_id.id
               await respondentService.put(this.respondent, id)
               this.$router.push({
                 name: 'Respondents'
@@ -218,17 +195,22 @@ export default {
          const id = this.$store.state.respondentIdEdit
          try {
              const data = (await respondentService.show(id)).data
-
+             const roles = (await roleService.index()).data
              this.respondent.id = data.id
              this.respondent.email = data.email
              this.respondent.first_name = data.first_name
              this.respondent.last_name = data.last_name
              this.respondent.phone_pri = data.phone_pri
-             this.respondent.facility_code = data.facility_code
              this.respondent.user_name = data.user_name
              this.respondent.phone_sec = data.phone_sec
              this.respondent.about = data.about
-             
+
+            roles.forEach(role => {
+              //console.log(this.respondent.role_id)
+              if (role.id == data.role_id) {
+               this.role_place_holder = role.role_name
+              }
+            });
          } catch (err) {
              console.log(err.response.data.error)
          }
