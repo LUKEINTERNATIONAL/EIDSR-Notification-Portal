@@ -57,10 +57,10 @@
           <tr v-for="respondent of respondents"
             :key="respondent.id">
             <td>{{respondent.id}}</td>
-            <td>{{respondent.first_name+" "+respondent.last_name}}</td>
-            <td>{{respondent.role_name}}</td>
-            <td>{{respondent.phone_pri}}</td>
-            <td>{{respondent.phone_sec}}</td>
+            <td>{{respondent.name}}</td>
+            <td>{{respondent.role}}</td>
+            <td>{{respondent.phone1}}</td>
+            <td>{{respondent.phone2}}</td>
             <td>{{respondent.email}}</td>
             <td class="action-edit-btn">
                 <v-btn
@@ -96,7 +96,7 @@ export default {
   components: {  },
   data() {
     return {
-      respondents: null,
+      respondents: [],
     }
   },
   methods: {
@@ -125,24 +125,25 @@ export default {
       width: 100,
       height: 64,
     });
-    const roles = (await roleService.index()).data
     const data = (await respondentService.index()).data
      if (!!data) {
-        if(roles){
-          for(let role of roles) {
-              data.forEach(respondent_cp => {
-                if (respondent_cp.role_id == role.role_id) {
-                  let role_name = {
-                  role_name: role.role_name
-                }
-                Object.assign(respondent_cp, role_name)
-                }
-              });
-          }
-        }
-    loader.hide()
+       data.map((value)=>{
+          const roleName = value.role_name	
+          let data = value.Respondents.map((value)=>{
+            return {
+              id: value.id ,
+              name: value.first_name+" "+ value.last_name ,
+              phone1 : value.phone_pri,
+              phone2 : value.phone_sec,
+              role : roleName,
+              email: value.email ,
+            }
+          })
+          this.respondents.push(...data)
+          return data
+        })
+      loader.hide()
     }
-    this.respondents = data
   }
 }
 </script>
