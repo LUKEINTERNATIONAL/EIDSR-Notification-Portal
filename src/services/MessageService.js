@@ -5,6 +5,10 @@ export default {
         return Api().get(`messages`, {})
     },
 
+    getYearMessages () {
+        return Api().get(`messages/year`, {})
+    },
+
     post (message) {
         return Api().post(`message`,message)
     },

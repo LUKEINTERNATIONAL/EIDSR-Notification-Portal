@@ -12,7 +12,7 @@ export default {
     show(caseId) {
         return Api().get(`cases/${caseId}`)
     },
-    getYearCases () {
-        return Api().get(`cases/year`, {})
+    getYearCases (conditions) {
+        return Api().post(`cases/year`, conditions)
     },
 }
