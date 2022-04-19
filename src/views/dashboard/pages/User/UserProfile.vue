@@ -61,7 +61,7 @@
                 </v-col>
 
                 <v-col cols="4" md="4">
-                  <v-subheader>Adress: </v-subheader>
+                  <v-subheader>Address: </v-subheader>
                 </v-col>
                 <v-col cols="5">
                   <v-text-field
