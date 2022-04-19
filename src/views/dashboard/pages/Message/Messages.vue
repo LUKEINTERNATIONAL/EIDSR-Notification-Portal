@@ -28,7 +28,10 @@
               Message
             </th>
             <th class="primary--text">
-              Status
+              SMS Status
+            </th>
+            <th class="primary--text">
+              Email Status
             </th>
             <th class="primary--text">
               Date
@@ -47,6 +50,7 @@
             <td>{{message.respondent_id}}</td>
             <td>{{message.body}}</td>
             <td>{{message.status}}</td>
+            <td>{{ emailStatus(message.email_status) }}</td>
             <td>{{ moment(message.createdAt).format('MMMM Do YYYY, h:mm:ss a') }}</td>
             <td class="action-edit-btn">
 
@@ -100,6 +104,12 @@ export default {
           console.log(err)
         } 
       }
+    },
+    emailStatus(statusId) {
+      if(parseInt(statusId))
+        return "Sent"
+      else 
+        return "pending"
     }
   },
   async mounted() {

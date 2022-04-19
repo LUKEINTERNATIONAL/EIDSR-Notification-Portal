@@ -616,10 +616,7 @@ import MessageService from "./../../services/MessageService"
                 categories: messages[2]
             }
         }}
-        console.log(messages)
       }
-      },
-      
-
+    },
   }
 </script>

@@ -12,110 +12,88 @@
         <base-material-card>
           <template v-slot:heading>
             <div class="display-2 font-weight-light">
-              Edit Profile
+              User Profile
             </div>
 
             <div class="subtitle-1 font-weight-light">
-              Complete your profile
+              User summary details
             </div>
           </template>
 
           <v-form>
             <v-container class="py-0">
               <v-row>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Company (disabled)"
-                    disabled
-                  />
-                </v-col>
 
-                <v-col
-                  cols="12"
-                  md="4"
-                >
+                <v-col cols="4" md="4">
+                  <v-subheader>User name: </v-subheader>
+                </v-col>
+                <v-col cols="5">
                   <v-text-field
-                    class="purple-input"
-                    label="User Name"
                     v-model="user.username"
-                  />
+                  ></v-text-field>
                 </v-col>
 
-                <v-col
-                  cols="12"
-                  md="4"
-                >
+                <v-col cols="4" md="4">
+                  <v-subheader>Email Address: </v-subheader>
+                </v-col>
+                <v-col cols="5">
                   <v-text-field
-                    label="Email Address"
-                    class="purple-input"
                     v-model="user.email"
-                  />
+                  ></v-text-field>
                 </v-col>
 
-                <v-col
-                  cols="12"
-                  md="6"
-                >
+                <v-col cols="4" md="4">
+                  <v-subheader>First Name: </v-subheader>
+                </v-col>
+                <v-col cols="5">
                   <v-text-field
-                    label="First Name"
-                    class="purple-input"
                     v-model="user.first_name"
-                  />
+                  ></v-text-field>
                 </v-col>
 
-                <v-col
-                  cols="12"
-                  md="6"
-                >
+                <v-col cols="4" md="4">
+                  <v-subheader>Last Name: </v-subheader>
+                </v-col>
+                <v-col cols="5">
                   <v-text-field
-                    label="Last Name"
-                    class="purple-input"
                     v-model="user.last_name"
-                  />
+                  ></v-text-field>
                 </v-col>
 
-                <v-col cols="12">
+                <v-col cols="4" md="4">
+                  <v-subheader>Adress: </v-subheader>
+                </v-col>
+                <v-col cols="5">
                   <v-text-field
-                    label="Adress"
-                    class="purple-input"
                     v-model="user.address"
-                  />
+                  ></v-text-field>
                 </v-col>
 
-                <v-col
-                  cols="12"
-                  md="4"
-                >
+                <v-col cols="4" md="4">
+                  <v-subheader>Phone (primary): </v-subheader>
+                </v-col>
+                <v-col cols="5">
                   <v-text-field
-                    class="purple-input"
-                    required
-                    label="Phone (primary)"
-                    type="number"
                     v-model="user.phone_pri"
-                  />
+                  ></v-text-field>
                 </v-col>
 
-                <v-col
-                  cols="12"
-                  md="4"
-                >
+                <v-col cols="4" md="4">
+                  <v-subheader>Phone (secondary): </v-subheader>
+                </v-col>
+                <v-col cols="5">
                   <v-text-field
-                    class="purple-input"
-                    label="Phone (secondary)"
-                    type="number"
-                   v-model="user.phone_sec"
-                  />
+                    v-model="user.phone_sec"
+                  ></v-text-field>
                 </v-col>
 
-                <v-col cols="12">
+                <v-col cols="4" md="4">
+                  <v-subheader>About: </v-subheader>
+                </v-col>
+                <v-col cols="5">
                   <v-textarea
-                    class="purple-input"
-                    label="About Me"
                     v-model="user.about"
-                  />
+                  ></v-textarea>
                 </v-col>
 
                 <v-col
@@ -129,7 +107,7 @@
                     class="mr-0"
                     @click="saveUpdatedUserDetails"
                   >
-                    Update Profile
+                    Update
                   </v-btn>
                 </v-col>
               </v-row>
@@ -158,7 +136,6 @@ export default {
           },
           about: this.about,
           phone_sec: this.phone_sec,
-
           error: null,
           userID: this.$store.state.user.id,
           rules: {
@@ -171,9 +148,8 @@ export default {
         try {
           Object.assign(this.user, this.about)
           Object.assign(this.user, this.phone_sec)
-
           const response = await userService.put(this.user, this.userID)
-          this.$store.dispatch('setUser', response.data.user)
+          //this.$store.dispatch('setUser', response.data.user)
           this.$router.push({
             name: 'Dashboard'
           })
@@ -184,10 +160,8 @@ export default {
     },
     async mounted() {
       this.error = null
-     
       try {
           const data = (await userService.show(this.userID)).data
-
           this.user.id = data.id
           this.user.email = data.email
           this.user.username = data.username
@@ -208,5 +182,11 @@ export default {
 <style scoped>
 .error1 {
   color: red;
+}
+.v-subheader{
+  font-size: large !important;
+}
+.col-md-4 {
+  padding: 6px !important;
 }
 </style>

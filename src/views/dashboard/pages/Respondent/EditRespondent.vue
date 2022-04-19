@@ -180,7 +180,8 @@ export default {
             //     return
             // }
             try {
-              this.respondent.role_id = this.respondent.role_id.id
+              if (this.respondent.role_id != undefined)
+                this.respondent.role_id = this.respondent.role_id.id
               await respondentService.put(this.respondent, id)
               this.$router.push({
                 name: 'Respondents'
@@ -206,7 +207,6 @@ export default {
              this.respondent.about = data.about
 
             roles.forEach(role => {
-              //console.log(this.respondent.role_id)
               if (role.id == data.role_id) {
                this.role_place_holder = role.role_name
               }
