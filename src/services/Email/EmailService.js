@@ -30,8 +30,8 @@ async function sendEmail(to, message, messageIDs) {
 
 async function Index(req, res) {
   res.send('Email Service 2')
-  var {to,message,id} = req.body
-  sendEmail(to,message,id)
+  var { to, message, messageIDs } = req.body
+  sendEmail(to, message, messageIDs)
 }
 
 module.exports = { Index }

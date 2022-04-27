@@ -2,9 +2,9 @@ var request = require ('http');
 function changeEmailStatus(messageIDs) {
     data = {
       messageId: messageIDs,
-      status: 'cole'
+      status: '1'
     }
-    payload = JSON.stringify(data)
+    var payload = JSON.stringify(data)
     const req = request.request(
         {
           host: 'localhost',
