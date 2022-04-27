@@ -91,7 +91,6 @@ const router = new Router({
   ],
 })
 
-
 router.beforeEach((to, from, next) => {
   if ( store.state.isUserLoggedIn == true && to.name == 'login') {
     next({name: 'Dashboard'})
@@ -104,7 +103,5 @@ router.beforeEach((to, from, next) => {
       next()
   }
 });
-
-
 
 export default router

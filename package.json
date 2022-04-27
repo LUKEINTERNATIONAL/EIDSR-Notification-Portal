@@ -10,7 +10,8 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
     "now-start": "vue-cli-service serve",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "email": "node src/services/Email/index.js"
   },
   "dependencies": {
     "@jamescoyle/vue-icon": "^0.1.2",
@@ -20,11 +21,14 @@
     "@myena/advanced-select": "^2.0.0",
     "apexcharts": "^3.35.0",
     "axios": "^0.24.0",
+    "body-parser": "^1.20.0",
     "core-js": "^3.6.2",
+    "express": "^4.17.1",
     "in-view": "^0.6.1",
     "material-design-icons": "^3.0.1",
     "material-icons": "^1.10.4",
     "moment": "2.24.0",
+    "nodemailer": "^6.7.2",
     "vue": "^2.6.11",
     "vue-apexcharts": "^1.6.2",
     "vue-demi": "^0.12.5",
