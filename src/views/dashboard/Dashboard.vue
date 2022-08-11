@@ -7,7 +7,7 @@
     <v-row>
       <v-col
         cols="12"
-        lg="4"
+        md="12"
       >
         <base-material-chart-card
           color="#E91E63"
@@ -74,7 +74,7 @@
 
       <v-col
         cols="12"
-        lg="4"
+        md="6"
       >
         <base-material-chart-card
           color="success"
@@ -142,7 +142,7 @@
 
       <v-col
         cols="12"
-        lg="4"
+        md="6"
       >
         <base-material-chart-card
           hover-reveal
@@ -569,8 +569,25 @@ import MessageService from "./../../services/MessageService"
         })
         this.respondentsItems = allRespondent
       },
-      async getCases(conditions = ['cholera','Smallpox','Yellow fever']){
-      
+      async getCases(conditions = [
+                                //'Acute Flaccid Paralysis (AFP)',
+                                'Anthrax',
+                                'Cholera',
+                                //'Cluster of SARI',
+                                'Diarrhoea with blood (Shigella dysentery)',
+                                //'Influenza due to new subtype',
+                                //'Maternal death',
+                                'Measles',
+                                //'Meningococcal meningitis',
+                                //'Neonatal tetanus',
+                                //'Plague',
+                                'Rabies (confirmed cases)',
+                                //'Severe Acute Respiratory Syndrome (SARS)',
+                                //'Smallpox',
+                                //'Typhoid fever',
+                                'Yellow fever',
+                                ]
+                    ){
         let totalData = (await caseService.getYearCases(conditions)).data
         let months = totalData.pop();
         this.barChartOptions = {...this.barChartOptions, ...{
