@@ -11,9 +11,18 @@
       class="px-5 py-3"
     >
     <template v-slot:heading>
-    <div class="clip-b font-weight-light">
-      <v-icon>mdi-clipboard-text</v-icon> 
-    </div>
+      <tr>
+        <td>
+          <div class="clip-b font-weight-light">
+            <v-icon>mdi-clipboard-text</v-icon> 
+          </div>
+        </td>
+        <td>
+          <div class="msg-bn">
+            Shows compiled messages
+          </div>
+        </td>
+      </tr>
     </template>
       <v-simple-table>
         <thead>
@@ -128,7 +137,6 @@ export default {
   },
 }
 </script>
-</script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .v-icon {
@@ -163,5 +171,17 @@ export default {
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+  font-weight: 500 !important;
+  font-size: 18px !important;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+  font-weight: 350 !important;
+  font-size: 18px !important;
+}
+.msg-bn {
+  font-size: 25px !important;
+  float: bottom;
 }
 </style>

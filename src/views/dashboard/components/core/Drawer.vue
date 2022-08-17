@@ -71,10 +71,6 @@
           :item="item"
         />
       </template>
-
-      <!-- Style cascading bug  -->
-      <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
-      <div />
     </v-list>
 
 
@@ -187,14 +183,14 @@
     },
   }
 </script>
-
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .v-list-item .v-list-item__title, .v-list-item .v-list-item__subtitle {
   line-height: 1.2;
-  font-weight: 200 !important;
-  font-size: 12px !important;
+  font-weight: 500 !important;
+  font-size: 18px !important;
 }
-.v-list-item .v-list-item__title, .v-list--dense .v-list-item .v-list-item__subtitle {
+.sidepanelFont .v-list-item .v-list-item__title {
   font-weight: 500 !important;
   font-size: 20px !important;
   line-height: inherit !important;
