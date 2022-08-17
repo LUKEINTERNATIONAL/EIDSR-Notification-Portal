@@ -65,7 +65,7 @@
           <!--  -->
         </base-item-group>
 
-        <base-item
+        <base-item class="sidepanelFont"
           v-else
           :key="`item-${i}`"
           :item="item"
@@ -188,59 +188,15 @@
   }
 </script>
 
-<style lang="sass">
-  @import '~vuetify/src/styles/tools/_rtl.sass'
-
-  #core-navigation-drawer
-    .v-list-group__header.v-list-item--active:before
-      opacity: .24
-
-    .v-list-item
-      &__icon--text,
-      &__icon:first-child
-        justify-content: center
-        text-align: center
-        width: 20px
-
-        +ltr()
-          margin-right: 24px
-          margin-left: 12px !important
-
-        +rtl()
-          margin-left: 24px
-          margin-right: 12px !important
-
-    .v-list--dense
-      .v-list-item
-        &__icon--text,
-        &__icon:first-child
-          margin-top: 10px
-
-    .v-list-group--sub-group
-      .v-list-item
-        +ltr()
-          padding-left: 8px
-
-        +rtl()
-          padding-right: 8px
-
-      .v-list-group__header
-        +ltr()
-          padding-right: 0
-
-        +rtl()
-          padding-right: 0
-
-        .v-list-item__icon--text
-          margin-top: 19px
-          order: 0
-
-        .v-list-group__header__prepend-icon
-          order: 2
-
-          +ltr()
-            margin-right: 8px
-
-          +rtl()
-            margin-left: 8px
+<style>
+.v-list-item .v-list-item__title, .v-list-item .v-list-item__subtitle {
+  line-height: 1.2;
+  font-weight: 200 !important;
+  font-size: 12px !important;
+}
+.v-list-item .v-list-item__title, .v-list--dense .v-list-item .v-list-item__subtitle {
+  font-weight: 500 !important;
+  font-size: 20px !important;
+  line-height: inherit !important;
+}
 </style>

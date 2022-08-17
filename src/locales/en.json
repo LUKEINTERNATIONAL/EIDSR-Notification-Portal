@@ -42,5 +42,7 @@
   "respondents": "Respondents",
   "vforms": "Validation Forms",
   "widgets": "Widgets",
-  "wizard": "Wizard"
+  "wizard": "Wizard",
+  "messages": "Messages",
+  "cases" : "Cases"
 }
