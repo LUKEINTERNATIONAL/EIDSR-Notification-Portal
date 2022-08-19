@@ -10,11 +10,20 @@
       title=""
       class="px-5 py-3"
     >
-           <template v-slot:heading>
-            <div class="clip-b font-weight-light">
-              <v-icon>mdi-clipboard-text</v-icon>
-            </div>
-          </template>
+    <template v-slot:heading>
+      <tr>
+        <td>
+          <div class="clip-b font-weight-light">
+            <v-icon>mdi-clipboard-text</v-icon> 
+          </div>
+        </td>
+        <td>
+          <div class="msg-bn">
+            Shows cases from different facilities
+          </div>
+        </td>
+      </tr>
+    </template>
 
       <v-simple-table>
         <thead>
@@ -98,5 +107,17 @@ export default {
   height: 30px;
   width: 30px;
   color: #e46048;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+  font-weight: 500 !important;
+  font-size: 18px !important;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+  font-weight: 350 !important;
+  font-size: 18px !important;
+}
+.msg-bn {
+  font-size: 25px !important;
+  float: bottom;
 }
 </style>
