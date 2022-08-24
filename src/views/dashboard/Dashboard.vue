@@ -207,65 +207,6 @@
           </template>
         </base-material-chart-card>
       </v-col>
-      <v-col
-        cols="12"
-        md="6"
-      >
-        <base-material-card
-          color="warning"
-          class="px-5 py-3"
-        >
-
-        <AdvancedSelect
-  v-model="value"
-  :options="options"
-  :disabled="disabled"
-  />
-
-          <template v-slot:heading>
-            <div class="display-2 font-weight-light">
-              Respondets Stats 
-            </div>
-
-            <div class="subtitle-1 font-weight-light">
-              Individuals who will receive IDRS SMS and Emails 
-            </div>
-          </template>
-          <v-card-text>
-            <v-data-table
-              :headers="respondentsHeaders"
-              :items="respondentsItems"
-            />
-          </v-card-text>
-        </base-material-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        md="6"
-      >
-      
-      <base-material-card
-          color="error"
-          class="px-5 py-3"
-        >
-          <template v-slot:heading>
-            <div class="display-2 font-weight-light">
-              Users Stats
-            </div>
-
-            <div class="subtitle-1 font-weight-light">
-              Individuals who will be using the system 
-            </div>
-          </template>
-          <v-card-text>
-            <v-data-table
-              :headers="usersHeaders"
-              :items="usersItems"
-            />
-          </v-card-text>
-        </base-material-card>
-      </v-col>
     </v-row>
   </v-container>
 </template>
