@@ -35,13 +35,13 @@
               Facility Code
             </th>
             <th class="primary--text">
+              Facility Name
+            </th>
+            <th class="primary--text">
               Condition (name)
             </th>
             <th class="primary--text">
-              Less Than and Equal to Five Years
-            </th>
-            <th class="primary--text">
-              Greater Than Five Years
+              Case count
             </th>
             <th class="primary--text">
               Date
@@ -54,10 +54,10 @@
            :key="_case.id">
             <td>{{_case.id}}</td>
             <td>{{_case.facility_code}}</td>
+            <td>{{_case.facility_name}}</td>
             <td>{{_case.condition_name}}</td>
-            <td>{{_case.less_five_years}}</td>
-            <td>{{_case.greater_equal_five_years}}</td>
-            <td>{{ moment(_case.createdAt).format('MMMM Do YYYY, h:mm:ss a') }}</td>
+            <td>{{_case.count}}</td>
+            <td>{{ moment(_case.createdAt).format('MMMM Do YYYY, h:mm a') }}</td>
           </tr>
         </tbody>
       </v-simple-table>
@@ -69,6 +69,7 @@
 
 <script>
 import caseService from '../../../../services/CaseService'
+import FacilityService from '../../../../services/FacilityService'
 var moment = require('moment')
 
 export default {
@@ -76,6 +77,7 @@ export default {
   data() {
     return {
       cases: null,
+      facilities: null,
       moment: moment
     }
   },
@@ -90,9 +92,29 @@ export default {
       width: 100,
       height: 64,
     });
-    this.cases = (await caseService.index()).data
-     if (!!this.cases) {
-     loader.hide()
+    const cases = (await caseService.index()).data
+    this.facilities = (await FacilityService.index()).data
+
+    if(!!cases && !!this.facilities){
+      let tmp_cases = []
+      this.facilities.forEach(facility => {
+        console.log(facility.name)
+        cases.forEach(_case => {
+          if(facility.facility_code == _case.facility_code) {
+            console.log(("mmmmmmmmmmmmmm"))
+            tmp_cases.push({
+              id: _case.id,
+              facility_code: _case.facility_code,
+              facility_name: facility.name,
+              condition_name: _case.condition_name,
+              count: parseInt(_case.less_five_years) + parseInt(_case.greater_equal_five_years),
+              createdAt: _case.createdAt
+            })
+          }
+        });
+      });
+      this.cases = tmp_cases
+      loader.hide()
     }
   },
 }
@@ -109,15 +131,19 @@ export default {
   color: #e46048;
 }
 .v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
-  font-weight: 500 !important;
-  font-size: 18px !important;
+  font-weight: 400 !important;
+  font-size: 15px !important;
 }
 .v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
-  font-weight: 350 !important;
-  font-size: 18px !important;
+  font-weight: 400 !important;
+  font-size: 15px !important;
 }
 .msg-bn {
   font-size: 25px !important;
   float: bottom;
+}
+.v-data-table {
+  overflow: scroll !important;
+  max-height: 515px !important;
 }
 </style>

@@ -158,4 +158,20 @@ export default {
   width: 30px;
   color: #e46048;
 }
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+  font-weight: 400 !important;
+  font-size: 15px !important;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+  font-weight: 400 !important;
+  font-size: 15px !important;
+}
+.msg-bn {
+  font-size: 25px !important;
+  float: bottom;
+}
+.v-data-table {
+  overflow: scroll !important;
+  max-height: 515px !important;
+}
 </style>

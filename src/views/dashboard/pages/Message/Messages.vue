@@ -151,6 +151,7 @@ export default {
 .tooltip {
   position: relative;
   display: inline-block;
+  padding: inherit;
 }
 
 /* Tooltip text */
@@ -164,24 +165,30 @@ export default {
   border-radius: 6px;
  
   /* Position the tooltip text - see examples below! */
-  position: absolute;
+  position:inherit;
+  padding: inherit !important;
   z-index: 10;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
+  z-index: 10;
 }
 .v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
-  font-weight: 500 !important;
-  font-size: 18px !important;
+  font-weight: 400 !important;
+  font-size: 15px !important;
 }
 .v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
-  font-weight: 350 !important;
-  font-size: 18px !important;
+  font-weight: 400 !important;
+  font-size: 15px !important;
 }
 .msg-bn {
   font-size: 25px !important;
   float: bottom;
+}
+.v-data-table {
+  overflow: scroll !important;
+  max-height: 515px !important;
 }
 </style>
