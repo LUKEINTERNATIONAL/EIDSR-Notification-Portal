@@ -116,7 +116,7 @@ export default {
     },
     emailStatus(statusId) {
       if(parseInt(statusId))
-        return "Sent"
+        return "Delivered"
       else 
         return "pending"
     }
