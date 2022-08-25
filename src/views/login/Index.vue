@@ -68,7 +68,7 @@ export default {
        connectionStatus: false,
       image: {
       msg: 'msg.jpg',
-      background: 'login.jpg',
+      background: 'Malawi-Village-Kids-Luke-International-LIN-1920x1082-1.jpg',
       malawiGovn: 'Malawi-Coat_of_arms_of_arms.png',
       pepfar : 'PEPFAR.png',
       lin : 'LIN.png'
