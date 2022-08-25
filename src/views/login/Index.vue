@@ -183,6 +183,8 @@ export default {
   margin: 0;
 }
 .v-application {
-  background-size: cover;
+  background-size:contain;
+  background-repeat: round;
 }
+
 </style>
