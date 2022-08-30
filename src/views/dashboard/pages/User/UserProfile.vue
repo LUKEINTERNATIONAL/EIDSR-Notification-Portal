@@ -23,8 +23,7 @@
           <v-form>
             <v-container class="py-0">
               <v-row>
-
-                <v-col cols="4" md="4">
+                <v-col cols="5">
                   <v-subheader>User name: </v-subheader>
                 </v-col>
                 <v-col cols="5">
@@ -33,7 +32,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="4" md="4">
+                <v-col cols="5">
                   <v-subheader>Email Address: </v-subheader>
                 </v-col>
                 <v-col cols="5">
@@ -42,7 +41,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="4" md="4">
+                <v-col cols="5">
                   <v-subheader>First Name: </v-subheader>
                 </v-col>
                 <v-col cols="5">
@@ -51,7 +50,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="4" md="4">
+                <v-col cols="5">
                   <v-subheader>Last Name: </v-subheader>
                 </v-col>
                 <v-col cols="5">
@@ -60,7 +59,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="4" md="4">
+                <v-col cols="5">
                   <v-subheader>Address: </v-subheader>
                 </v-col>
                 <v-col cols="5">
@@ -69,7 +68,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="4" md="4">
+                <v-col cols="5">
                   <v-subheader>Phone (primary): </v-subheader>
                 </v-col>
                 <v-col cols="5">
@@ -78,7 +77,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="4" md="4">
+                <v-col cols="5">
                   <v-subheader>Phone (secondary): </v-subheader>
                 </v-col>
                 <v-col cols="5">
@@ -87,7 +86,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="4" md="4">
+                <v-col cols="5">
                   <v-subheader>About: </v-subheader>
                 </v-col>
                 <v-col cols="5">
@@ -145,16 +144,20 @@ export default {
     },
     methods: {
       async saveUpdatedUserDetails() {
-        try {
-          Object.assign(this.user, this.about)
-          Object.assign(this.user, this.phone_sec)
-          const response = await userService.put(this.user, this.userID)
-          //this.$store.dispatch('setUser', response.data.user)
-          this.$router.push({
-            name: 'Dashboard'
-          })
-        } catch (err) {
-          this.error = err.response.data.error
+        if (confirm("Cornfirm changes!") == true) {
+              try {
+              Object.assign(this.user, this.about)
+              Object.assign(this.user, this.phone_sec)
+              const response = await userService.put(this.user, this.userID)
+              //this.$store.dispatch('setUser', response.data.user)
+              this.$router.push({
+                name: 'Dashboard'
+              })
+            } catch (err) {
+              this.error = err.response.data.error
+            }
+        } else {
+        //nothing
         }
       }
     },
@@ -184,7 +187,7 @@ export default {
   color: red;
 }
 .v-subheader{
-  font-size: large !important;
+  font-size: revert !important;
 }
 .col-md-4 {
   padding: 6px !important;
