@@ -98,10 +98,8 @@ export default {
     if(!!cases && !!this.facilities){
       let tmp_cases = []
       this.facilities.forEach(facility => {
-        console.log(facility.name)
         cases.forEach(_case => {
           if(facility.facility_code == _case.facility_code) {
-            console.log(("mmmmmmmmmmmmmm"))
             tmp_cases.push({
               id: _case.id,
               facility_code: _case.facility_code,
