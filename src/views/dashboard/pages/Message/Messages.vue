@@ -131,6 +131,7 @@ export default {
       height: 64,
     });
     this.messages = (await messageService.index()).data
+    this.messages.reverse()
     if (!!this.messages) {
      loader.hide()
     }

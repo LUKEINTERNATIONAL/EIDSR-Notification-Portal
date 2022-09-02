@@ -111,7 +111,7 @@ export default {
           }
         });
       });
-      this.cases = tmp_cases
+      this.cases = tmp_cases.reverse()
       loader.hide()
     }
   },
