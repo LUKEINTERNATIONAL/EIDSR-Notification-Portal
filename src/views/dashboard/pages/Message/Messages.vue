@@ -11,18 +11,30 @@
       class="px-5 py-3"
     >
     <template v-slot:heading>
-      <tr>
-        <td>
-          <div class="clip-b font-weight-light">
-            <v-icon>mdi-clipboard-text</v-icon> 
-          </div>
-        </td>
-        <td>
-          <div class="msg-bn">
-            Shows compiled messages
-          </div>
-        </td>
-      </tr>
+      <div>
+        <tr>
+          <td>
+            <div class="clip-b font-weight-light">
+              <v-icon>mdi-clipboard-text</v-icon> 
+            </div>
+          </td>
+          <td>
+            <div class="msg-bn">
+              Shows compiled messages
+            </div>
+          </td>
+        </tr>
+      </div>
+        <div class="font-weight-light" style="float: right; margin-top: -60px;">
+          <v-text-field
+          v-model="search"
+          label="Search"
+          class="mx-4"
+          ></v-text-field>
+        </div>
+      <div>
+
+      </div>
     </template>
       <v-simple-table>
         <thead>
@@ -94,7 +106,23 @@ export default {
     return {
       messages: null,
       moment: moment,
-      fullPage: false
+      fullPage: false,
+      search: '',
+      toBeFilteredMessages: null
+    }
+  },
+  watch: {
+    search(newQuery, oldQuery) {
+      if(this.messages != null) {
+        let tempFilteredMessages = []
+        this.toBeFilteredMessages.forEach(message => {
+          const position = message.body.toLowerCase().search(newQuery.toLowerCase())
+          if (position > -1) {
+            tempFilteredMessages.push(message)
+          }
+        })
+        this.messages = tempFilteredMessages
+      }
     }
   },
   methods: {
@@ -106,7 +134,6 @@ export default {
       if(confirm("Do you really want to delete?")){
         try {
           const message = (await messageService.delete(id)).data
-
           if(!!message)
             this.$router.go(this.$router.currentRoute)
         } catch (err) {
@@ -132,6 +159,7 @@ export default {
     });
     this.messages = (await messageService.index()).data
     this.messages.reverse()
+    this.toBeFilteredMessages = this.messages
     if (!!this.messages) {
      loader.hide()
     }

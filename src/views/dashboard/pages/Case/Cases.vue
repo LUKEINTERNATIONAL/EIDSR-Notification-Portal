@@ -11,18 +11,30 @@
       class="px-5 py-3"
     >
     <template v-slot:heading>
-      <tr>
-        <td>
-          <div class="clip-b font-weight-light">
-            <v-icon>mdi-clipboard-text</v-icon> 
-          </div>
-        </td>
-        <td>
-          <div class="msg-bn">
-            Shows cases from different facilities
-          </div>
-        </td>
-      </tr>
+      <div>
+        <tr>
+          <td>
+            <div class="clip-b font-weight-light">
+              <v-icon>mdi-clipboard-text</v-icon> 
+            </div>
+          </td>
+          <td>
+            <div class="msg-bn">
+              Shows cases from different facilities
+            </div>
+          </td>
+        </tr>
+      </div>
+
+      <div>
+        <div class="font-weight-light" style="float: right; margin-top: -60px;">
+          <v-text-field
+          v-model="search"
+          label="Search"
+          class="mx-4"
+          ></v-text-field>
+        </div>
+      </div>
     </template>
 
       <v-simple-table>
@@ -78,7 +90,23 @@ export default {
     return {
       cases: null,
       facilities: null,
-      moment: moment
+      moment: moment,
+      search: '',
+      toBeFilteredCases: null
+    }
+  },
+  watch: {
+    search(newQuery, oldQuery) {
+      if(this.cases != null) {
+        let tempFiltredCases = []
+        this.toBeFilteredCases.forEach(_case => {
+          const position = _case.condition_name.toLowerCase().search(newQuery.toLowerCase())
+          if (position > -1) {
+            tempFiltredCases.push(_case)
+          }
+        })
+        this.cases = tempFiltredCases
+      }
     }
   },
   methods: {
@@ -112,6 +140,7 @@ export default {
         });
       });
       this.cases = tmp_cases.reverse()
+      this.toBeFilteredCases = this.cases
       loader.hide()
     }
   },
