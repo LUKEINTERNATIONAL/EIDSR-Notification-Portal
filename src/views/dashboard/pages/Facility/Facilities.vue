@@ -20,7 +20,7 @@
           </td>
           <td>
             <div class="msg-bn">
-              Shows cases from different facilities
+              Facilities
             </div>
           </td>
         </tr>
@@ -50,26 +50,22 @@
               Facility Name
             </th>
             <th class="primary--text">
-              Condition (name)
+              VPN ip Address
             </th>
             <th class="primary--text">
-              Case count
-            </th>
-            <th class="primary--text">
-              Date
+              Last Pinged
             </th>
           </tr>
         </thead>
 
         <tbody>
-          <tr v-for="_case in cases"
-           :key="_case.id">
-            <td>{{_case.id}}</td>
-            <td>{{_case.facility_code}}</td>
-            <td>{{_case.facility_name}}</td>
-            <td>{{_case.condition_name}}</td>
-            <td>{{_case.count}}</td>
-            <td>{{ moment(_case.createdAt).format('MMMM Do YYYY, h:mm a') }}</td>
+          <tr v-for="_facility in facilities"
+           :key="_facility.id">
+            <td>{{_facility.id}}</td>
+            <td>{{_facility.facility_code}}</td>
+            <td>{{_facility.name}}</td>
+            <td>{{_facility.vpn_ip_address}}</td>
+            <td>{{ moment(_facility.last_pinged).format('MMMM Do YYYY, h:mm a') }}</td>
           </tr>
         </tbody>
       </v-simple-table>
@@ -80,7 +76,6 @@
 </template>
 
 <script>
-import caseService from '../../../../services/CaseService'
 import FacilityService from '../../../../services/FacilityService'
 var moment = require('moment')
 
@@ -88,24 +83,23 @@ export default {
   components: {  },
   data() {
     return {
-      cases: null,
       facilities: null,
       moment: moment,
       search: '',
-      toBeFilteredCases: null
+      toBeFilteredFacilities: null
     }
   },
   watch: {
     search(newQuery, oldQuery) {
-      if(this.cases != null) {
-        let tempFiltredCases = []
-        this.toBeFilteredCases.forEach(_case => {
-          const position = _case.condition_name.toLowerCase().search(newQuery.toLowerCase())
+      if(this.facilities != null) {
+        let tempFiltredFacilities = []
+        this.toBeFilteredFacilities.forEach(_facility => {
+          const position = _facility.condition_name.toLowerCase().search(newQuery.toLowerCase())
           if (position > -1) {
-            tempFiltredCases.push(_case)
+            tempFiltredFacilities.push(_facility)
           }
         })
-        this.cases = tempFiltredCases
+        this.facilities = tempFiltredFacilities
       }
     }
   },
@@ -120,27 +114,12 @@ export default {
       width: 100,
       height: 64,
     });
-    const cases = (await caseService.index()).data
     this.facilities = (await FacilityService.index()).data
 
-    if(!!cases && !!this.facilities){
-      let tmp_cases = []
-      this.facilities.forEach(facility => {
-        cases.forEach(_case => {
-          if(facility.facility_code == _case.facility_code) {
-            tmp_cases.push({
-              id: _case.id,
-              facility_code: _case.facility_code,
-              facility_name: facility.name,
-              condition_name: _case.condition_name,
-              count: parseInt(_case.less_five_years) + parseInt(_case.greater_equal_five_years),
-              createdAt: _case.createdAt
-            })
-          }
-        });
-      });
-      this.cases = tmp_cases.reverse()
-      this.toBeFilteredCases = this.cases
+    if(!!this.facilities){
+      let tmp_facilities = this.facilities
+      this.facilities = tmp_facilities.reverse()
+      this.toBeFilteredFacilities = this.facilities
       loader.hide()
     }
   },
