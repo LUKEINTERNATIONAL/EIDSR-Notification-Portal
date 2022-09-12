@@ -55,6 +55,11 @@ const router = new Router({
           component: () => import('@/views/dashboard/pages/Case/Cases'),
         },
         {
+          name: 'Facilities',
+          path: 'pages/facility',
+          component: () => import('@/views/dashboard/pages/Facility/Facilities')
+        },
+        {
           name: 'Notifications',
           path: 'components/notifications',
           component: () => import('@/views/dashboard/component/Notifications'),
