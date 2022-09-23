@@ -71,8 +71,33 @@
           :item="item"
         />
       </template>
+
+    <div class="drawer-seplator">
+      <hr>
+        <div class="drawer-seplator-label">
+          <label>
+            <h4> {{ AdminDescription }} </h4>
+          </label>
+        </div>
+      <hr>
+    </div>
     </v-list>
 
+    <template v-for="(item, i) in computedAdminItems">
+    <base-item-group
+      v-if="item.children"
+      :key="`group-${i}`"
+      :item="item"
+    >
+      <!--  -->
+    </base-item-group>
+
+    <base-item class="sidepanelFont"
+      v-else
+      :key="`item-${i}`"
+      :item="item"
+    />
+  </template>
 
   </v-navigation-drawer>
 </template>
@@ -146,9 +171,17 @@
           to: '/components/notifications',
         },
       ],
+      adminItems: [
+        {
+          icon: 'mdi-apple-icloud',
+          title: 'Facilities',
+          to: '/pages/facility',
+        },
+      ],
       image: {
       msg: 'msg.jpg'
-      }
+      },
+      AdminDescription: 'Admin Controlls'
     }),
 
     computed: {
@@ -163,6 +196,9 @@
       },
       computedItems () {
         return this.items.map(this.mapItem)
+      },
+      computedAdminItems () {
+        return this.adminItems.map(this.mapItem)
       },
       profile () {
         return {
@@ -184,7 +220,7 @@
   }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
 .v-list-item .v-list-item__title, .v-list-item .v-list-item__subtitle {
   line-height: 1.2;
   font-weight: 500 !important;
@@ -194,5 +230,9 @@
   font-weight: 500 !important;
   font-size: 20px !important;
   line-height: inherit !important;
+}
+.drawer-seplator-label {
+  padding: 4%;
+  color: dimgray;
 }
 </style>
