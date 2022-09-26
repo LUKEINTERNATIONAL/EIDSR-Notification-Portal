@@ -173,10 +173,20 @@
       ],
       adminItems: [
         {
-          icon: 'mdi-apple-icloud',
+          icon: 'mdi-cloud-check',
           title: 'Facilities',
           to: '/pages/facility',
         },
+        { 
+          icon: 'mdi-briefcase-variant',
+          title: 'Conditions',
+          to: '/pages/conditions'
+        },
+        {
+          icon: 'mdi-comment-quote',
+          title: 'Custom Messages',
+          to:'/pages/custom_messages'
+        }
       ],
       image: {
       msg: 'msg.jpg'
