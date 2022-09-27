@@ -72,7 +72,7 @@
         />
       </template>
 
-    <div class="drawer-seplator">
+    <div class="drawer-seplator" v-if="isUserAdmin">
       <hr>
         <div class="drawer-seplator-label">
           <label>
@@ -83,7 +83,7 @@
     </div>
     </v-list>
 
-    <template v-for="(item, i) in computedAdminItems">
+    <template v-for="(item, i) in computedAdminItems" v-if="isUserAdmin">
     <base-item-group
       v-if="item.children"
       :key="`group-${i}`"
@@ -104,9 +104,8 @@
 
 <script>
   // Utilities
-  import {
-    mapState,
-  } from 'vuex'
+  import { mapState } from 'vuex'
+  import store from '../../../../store'
 
   export default {
     name: 'DashboardCoreDrawer',
@@ -188,10 +187,9 @@
           to:'/pages/custom_messages'
         }
       ],
-      image: {
-      msg: 'msg.jpg'
-      },
-      AdminDescription: 'Admin Controlls'
+      image: { msg: 'msg.jpg' },
+      AdminDescription: 'Admin Controlls',
+      isUserAdmin: false
     }),
 
     computed: {
@@ -218,6 +216,10 @@
       },
     },
 
+    mounted() {
+       this.changeValue()
+    },
+
     methods: {
       mapItem (item) {
         return {
@@ -226,6 +228,16 @@
           title: this.$t(item.title),
         }
       },
+      /** isUserAdmin */
+      changeValue() {
+        try {
+          if(store.state.userRoleId == 824) {
+            this.isUserAdmin = true
+          }
+        } catch (error) {
+          console.error('an error has occured trying to read isUserAdmin : '+error)
+        }
+      }
     },
   }
 </script>

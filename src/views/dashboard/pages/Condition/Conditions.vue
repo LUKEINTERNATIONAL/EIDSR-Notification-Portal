@@ -56,12 +56,11 @@
         </thead>
 
         <tbody>
-          <tr v-for="_facility in facilities"
-           :key="_facility.id">
-            <td>{{_facility.id}}</td>
-            <td>{{_facility.facility_code}}</td>
-            <td>{{_facility.name}}</td>
-            <td>{{_facility.vpn_ip_address}}</td>
+          <tr v-for="_condition in conditions"
+           :key="_condition.id">
+            <td>{{_condition.id}}</td>
+            <td>{{_condition.name}}</td>
+            <td>{{_condition.vpn_ip_address}}</td>
           </tr>
         </tbody>
       </v-simple-table>
@@ -72,30 +71,30 @@
 </template>
 
 <script>
-import FacilityService from '../../../../services/FacilityService'
+import ConditionService from '../../../../services/ConditionService'
 var moment = require('moment')
 
 export default {
   components: {  },
   data() {
     return {
-      facilities: null,
+      conditions: null,
       moment: moment,
       search: '',
-      toBeFilteredFacilities: null
+      toBeFilteredconditions: null
     }
   },
   watch: {
     search(newQuery, oldQuery) {
-      if(this.facilities != null) {
-        let tempFiltredFacilities = []
-        this.toBeFilteredFacilities.forEach(_facility => {
-          const position = _facility.condition_name.toLowerCase().search(newQuery.toLowerCase())
+      if(this.conditions != null) {
+        let tempFiltredconditions = []
+        this.toBeFilteredconditions.forEach(_condition => {
+          const position = _condition.condition_name.toLowerCase().search(newQuery.toLowerCase())
           if (position > -1) {
-            tempFiltredFacilities.push(_facility)
+            tempFiltredconditions.push(_condition)
           }
         })
-        this.facilities = tempFiltredFacilities
+        this.conditions = tempFiltredconditions
       }
     }
   },
@@ -110,12 +109,12 @@ export default {
       width: 100,
       height: 64,
     });
-    this.facilities = (await FacilityService.index()).data
+    this.conditions = (await ConditionService.index()).data
 
-    if(!!this.facilities){
-      let tmp_facilities = this.facilities
-      this.facilities = tmp_facilities.reverse()
-      this.toBeFilteredFacilities = this.facilities
+    if(!!this.conditions){
+      let tmp_conditions = this.conditions
+      this.conditions = tmp_conditions.reverse()
+      this.toBeFilteredconditions = this.conditions
       loader.hide()
     }
   },
