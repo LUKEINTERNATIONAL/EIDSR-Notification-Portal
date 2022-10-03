@@ -47,7 +47,7 @@
               Name
             </th>
             <th class="primary--text">
-              Toggle
+              Active
             </th>
             <th class="primary--text">
               Paired With
@@ -58,24 +58,28 @@
         <tbody>
           <tr v-for="_condition in conditions"
            :key="_condition.id">
-            <td>{{_condition.id}}</td>
+            <td>{{_condition.code}}</td>
             <td>{{_condition.name}}</td>
-            <td>{{_condition.vpn_ip_address}}</td>
+            <td>
+              <switch-slide :active="_condition.active" />
+            </td>
+             <td>{{_condition.paired_with_conditions_ids}}</td>
           </tr>
         </tbody>
       </v-simple-table>
     </base-material-card>
 
-    <div class="py-3" />
+    <div class="py-3"/>
   </v-container>
 </template>
 
 <script>
 import ConditionService from '../../../../services/ConditionService'
+import SwitchSlide from '../../components/core/SwitchSlide.vue'
 var moment = require('moment')
 
 export default {
-  components: {  },
+  components: { SwitchSlide },
   data() {
     return {
       conditions: null,
