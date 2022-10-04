@@ -37,11 +37,17 @@
       </div>
     </template>
 
-      <v-simple-table>
+      <!-- <v-simple-table
+        fixed-header
+        height="500px"
+      >
         <thead>
           <tr>
             <th class="primary--text">
               ID
+            </th>
+            <th class="primary--text">
+              Code
             </th>
             <th class="primary--text">
               Name
@@ -58,6 +64,7 @@
         <tbody>
           <tr v-for="_condition in conditions"
            :key="_condition.id">
+           <td>{{_condition.id}}</td>
             <td>{{_condition.code}}</td>
             <td>{{_condition.name}}</td>
             <td>
@@ -66,7 +73,18 @@
              <td>{{_condition.paired_with_conditions_ids}}</td>
           </tr>
         </tbody>
-      </v-simple-table>
+      </v-simple-table> -->
+    <v-data-table
+    :headers="headers"
+    :items="conditions"
+    :items-per-page="4"
+    class="elevation-1 mytable"
+    :search="search"
+    >
+    <template slot="item.active" slot-scope="props">
+      <switch-slide :active="props.item.active" />
+    </template>
+    </v-data-table>
     </base-material-card>
 
     <div class="py-3"/>
@@ -82,25 +100,24 @@ export default {
   components: { SwitchSlide },
   data() {
     return {
-      conditions: null,
+      headers: [
+        {
+          text: 'id',
+          align: 'start',
+          sortable: false,
+          value: 'id',
+        },
+        { text: 'Code', value: 'code' },
+        { text: 'Name', value: 'name' },
+        { text: 'Active', value: 'active' },
+        { text: 'Paired IDs', value: 'paired_with_conditions_ids' }
+      ],
+      conditions: [],
       moment: moment,
       search: '',
-      toBeFilteredconditions: null
     }
   },
   watch: {
-    search(newQuery, oldQuery) {
-      if(this.conditions != null) {
-        let tempFiltredconditions = []
-        this.toBeFilteredconditions.forEach(_condition => {
-          const position = _condition.condition_name.toLowerCase().search(newQuery.toLowerCase())
-          if (position > -1) {
-            tempFiltredconditions.push(_condition)
-          }
-        })
-        this.conditions = tempFiltredconditions
-      }
-    }
   },
   methods: {
   },
@@ -113,12 +130,10 @@ export default {
       width: 100,
       height: 64,
     });
-    this.conditions = (await ConditionService.index()).data
+    this.conditions = (await ConditionService.index()).data.rows
 
     if(!!this.conditions){
-      let tmp_conditions = this.conditions
-      this.conditions = tmp_conditions.reverse()
-      this.toBeFilteredconditions = this.conditions
+      this.conditions =  this.conditions.reverse()
       loader.hide()
     }
   },
@@ -130,25 +145,15 @@ export default {
 .v-icon {
   font-size: 70px;
 }
-.action-edit-btn .v-btn--fab.v-size--default{
-  height: 30px;
-  width: 30px;
-  color: #e46048;
-}
-.v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
-  font-weight: 400 !important;
-  font-size: 15px !important;
-}
-.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
-  font-weight: 400 !important;
-  font-size: 15px !important;
-}
+
 .msg-bn {
   font-size: 25px !important;
   float: bottom;
 }
-.v-data-table {
-  overflow: scroll !important;
-  max-height: 515px !important;
+
+.theme--light.v-data-table {
+  background-color: #522121;
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: 100;
 }
 </style>

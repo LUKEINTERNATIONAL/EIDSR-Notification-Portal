@@ -23,6 +23,7 @@ export default{
         },
     },
     async mounted() {
+        console.log(this.active)
         this.toogle = Boolean(this.active)
     }
 }
