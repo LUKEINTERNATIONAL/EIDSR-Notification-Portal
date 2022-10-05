@@ -130,7 +130,7 @@ export default {
       width: 100,
       height: 64,
     });
-    this.conditions = (await ConditionService.index()).data.rows
+    this.conditions = (await ConditionService.index()).data
 
     if(!!this.conditions){
       this.conditions =  this.conditions.reverse()
