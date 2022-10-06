@@ -12,4 +12,8 @@ export default {
     show(conditionId) {
         return Api().get(`cases/${conditionId}`)
     },
+
+    paginatedIndex(page, size) {
+        return Api().get(`paginatedConditions/${page}/${size}`)
+    }
 }

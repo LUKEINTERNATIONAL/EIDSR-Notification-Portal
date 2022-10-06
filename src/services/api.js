@@ -26,9 +26,9 @@ export default () => {
     
     const errorHandler = error => {
         store.state.isUserLoggedIn = false
-        router.push({
-            name: 'login'
-          })
+        // router.push({
+        //     name: 'login'
+        //   })
         return Promise.reject(error);
     };
     

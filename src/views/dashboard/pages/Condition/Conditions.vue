@@ -32,6 +32,7 @@
           v-model="search"
           label="Search"
           class="mx-4"
+          append-icon="mdi-magnify"
           ></v-text-field>
         </div>
       </div>
@@ -77,9 +78,14 @@
     <v-data-table
     :headers="headers"
     :items="conditions"
-    :items-per-page="4"
-    class="elevation-1 mytable"
+    :items-per-page="5"
     :search="search"
+    :page="page"
+    :pageCount="numberOfPages"
+    :options.sync="options"
+    :server-items-length="total"
+    :loading="loading"
+    class="elevation-1 mytable"
     >
     <template slot="item.active" slot-scope="props">
       <switch-slide :active="props.item.active" />
@@ -115,30 +121,45 @@ export default {
       conditions: [],
       moment: moment,
       search: '',
+      page: 0,
+      numberOfPages: 0,
+      total: 0,
+      options: {},
+      loading: true,
     }
   },
   watch: {
+    options: {
+      handler() {
+        this.readDataFromAPI();
+      },
+    },
+    //deep: true,
   },
   methods: {
-  },
-  async mounted() {
-      let loader = this.$loading.show({
-      // Optional parameters
-      container: this.fullPage ? null : this.$refs.formContainer,
-      canCancel: false,
-      loader: 'spinner',
-      width: 100,
-      height: 64,
-    });
-    this.conditions = (await ConditionService.index()).data
+    async readDataFromAPI() {
+    this.loading = true
+    console.log('##################')
+    console.log(this.options)
+    console.log('##################')
+    const { page, itemsPerPage } = this.options
+    //let pageNumber = page - 1
+    const data = (await ConditionService.paginatedIndex(page-1,itemsPerPage)).data
+    this.conditions = data.rows
+    this.total = data.count
+    this.numberOfPages = this.total;
 
     if(!!this.conditions){
       this.conditions =  this.conditions.reverse()
-      loader.hide()
+      this.loading = false
+    }
     }
   },
+
+  async mounted() {
+    this.readDataFromAPI()
+  },
 }
-</script>
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
@@ -152,7 +173,7 @@ export default {
 }
 
 .theme--light.v-data-table {
-  background-color: #522121;
+  background-color: #f8f8f8;
   color: rgba(0, 0, 0, 0.87);
   font-weight: 100;
 }

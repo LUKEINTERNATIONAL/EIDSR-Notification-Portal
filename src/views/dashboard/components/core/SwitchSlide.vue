@@ -18,8 +18,8 @@ export default{
     },
     props: {
         active: {
-            default: false,
-            type: Boolean,
+            default: 0,
+            type: Number,
         },
     },
     async mounted() {
