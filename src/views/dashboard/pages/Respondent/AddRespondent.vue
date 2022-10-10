@@ -229,10 +229,10 @@ export default {
               Object.assign(this.respondent, this.about)
               Object.assign(this.respondent, this.phone_sec)
               this.respondent.role_id = this.respondent.role_id.id
-              // await respondentService.post(this.respondent)
-              // this.$router.push({
-              //   name: 'Respondents'
-              // })
+              await respondentService.post(this.respondent)
+              this.$router.push({
+                name: 'Respondents'
+              })
             } catch (err) {
               this.error = err.response.data.error
             }
