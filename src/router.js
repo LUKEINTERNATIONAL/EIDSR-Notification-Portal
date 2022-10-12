@@ -50,6 +50,11 @@ const router = new Router({
           component: () => import('@/views/dashboard/pages/Message/Messages'),
         },
         {
+          name: 'Custom Messages',
+          path: 'pages/customMesaages',
+          component: () => import('@/views/dashboard/pages/CustomMessage/CustomMessages')
+        },
+        {
           name: 'Cases',
           path: 'pages/cases',
           component: () => import('@/views/dashboard/pages/Case/Cases'),

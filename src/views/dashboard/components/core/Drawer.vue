@@ -184,7 +184,7 @@
         {
           icon: 'mdi-comment-quote',
           title: 'Custom Messages',
-          to:'/pages/custom_messages'
+          to:'/pages/customMesaages'
         }
       ],
       image: { msg: 'msg.jpg' },
