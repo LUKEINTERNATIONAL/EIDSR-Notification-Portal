@@ -81,7 +81,7 @@
                     style="margin-left: 33px; background-color: #e46048"
                     elevation="3"
                     fab
-                    @click="deleteMessage(message.id)"
+                    @click="navigateTo({name: 'Edit Custom Message'}, message.id)"
                 > <v-icon>mdi-comment-edit</v-icon>
                 </v-btn>
 
@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     navigateTo(route, id){
-      this.$store.dispatch('setRespondentIdEdit', id)
+      this.$store.dispatch('setCustomMessageEditId', id)
       this.$router.push(route)
     },
     async deleteMessage(id) {

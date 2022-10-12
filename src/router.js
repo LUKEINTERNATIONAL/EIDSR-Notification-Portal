@@ -51,8 +51,13 @@ const router = new Router({
         },
         {
           name: 'Custom Messages',
-          path: 'pages/customMesaages',
+          path: 'pages/customMessages',
           component: () => import('@/views/dashboard/pages/CustomMessage/CustomMessages')
+        },
+        {
+          name: 'Edit Custom Message',
+          path: 'pages/editcustomMesage',
+          component: () => import('@/views/dashboard/pages/CustomMessage/EditCustomMessage')
         },
         {
           name: 'Cases',
