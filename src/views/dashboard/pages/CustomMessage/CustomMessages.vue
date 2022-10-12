@@ -11,6 +11,7 @@
       class="px-5 py-3"
     >
     <template v-slot:heading>
+
       <div>
         <tr>
           <td>
@@ -25,16 +26,24 @@
           </td>
         </tr>
       </div>
-        <div class="font-weight-light" style="float: right; margin-top: -60px;">
+
+        <div class="font-weight-light" style="float: right; margin-top: -60px; margin-right: 50px;">
+            <v-btn
+                elevation="2"
+                fab
+                @click="navigateTo({name: 'Add Respondent'})"
+            > <v-icon>mdi-comment-plus</v-icon>
+            </v-btn>
+        </div>
+
+        <div class="font-weight-light" style="float: right; margin-top: -60px; margin-right: 200px;">
           <v-text-field
           v-model="search"
           label="Search"
           class="mx-4"
           ></v-text-field>
         </div>
-      <div>
 
-      </div>
     </template>
       <v-simple-table>
         <thead>
@@ -43,23 +52,18 @@
               ID
             </th>
             <th class="primary--text">
-              Respondent ID
+              Code
             </th>
             <th class="primary--text">
               Message
             </th>
-            <th class="primary--text">
-              SMS Status
-            </th>
-            <th class="primary--text">
-              Email Status
-            </th>
-            <th class="primary--text">
+             <th class="primary--text">
               Date
             </th>
             <th class="primary--text">
-
+              
             </th>
+            
           </tr>
         </thead>
 
@@ -68,14 +72,20 @@
               :key="message.id">
 
             <td>{{message.id}}</td>
-            <td>{{message.respondent_id}}</td>
+            <td>{{message.code}}</td>
             <td>{{message.body}}</td>
-            <td>{{message.status}}</td>
-            <td>{{ emailStatus(message.email_status) }}</td>
             <td>{{ moment(message.createdAt).format('MMMM Do YYYY, h:mm:ss a') }}</td>
             <td class="action-edit-btn">
 
-                <div class="tooltip">
+                <v-btn
+                    style="margin-left: 33px; background-color: #e46048"
+                    elevation="3"
+                    fab
+                    @click="deleteMessage(message.id)"
+                > <v-icon>mdi-comment-edit</v-icon>
+                </v-btn>
+
+                <!-- <div class="tooltip"> -->
                 <v-btn
                     style="margin-left: 33px; background-color: #e46048"
                     elevation="3"
@@ -83,8 +93,8 @@
                     @click="deleteMessage(message.id)"
                 > <v-icon>mdi-delete</v-icon>
                 </v-btn>
-                 <span class="tooltiptext">delete</span>
-                </div>
+                 <!-- <span class="tooltiptext">delete</span>
+                </div> -->
 
             </td>
           </tr>
@@ -97,7 +107,7 @@
 </template>
 
 <script>
-import messageService from '../../../../services/MessageService'
+import customMessageService from '../../../../services/CustomMessageService'
 var moment = require('moment')
 
 export default {
@@ -133,7 +143,7 @@ export default {
     async deleteMessage(id) {
       if(confirm("Do you really want to delete?")){
         try {
-          const message = (await messageService.delete(id)).data
+          const message = (await customMessageService.delete(id)).data
           if(!!message)
             this.$router.go(this.$router.currentRoute)
         } catch (err) {
@@ -157,7 +167,7 @@ export default {
       width: 100,
       height: 64,
     });
-    this.messages = (await messageService.index()).data
+    this.messages = (await customMessageService.index()).data
     this.messages.reverse()
     this.toBeFilteredMessages = this.messages
     if (!!this.messages) {
