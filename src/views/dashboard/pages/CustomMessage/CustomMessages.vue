@@ -21,7 +21,7 @@
           </td>
           <td>
             <div class="msg-bn">
-              Shows compiled messages
+              Add, Edit and Remove Custom messages
             </div>
           </td>
         </tr>
@@ -31,7 +31,7 @@
             <v-btn
                 elevation="2"
                 fab
-                @click="navigateTo({name: 'Add Respondent'})"
+                @click="navigateTo({name: 'Add Custom Message'})"
             > <v-icon>mdi-comment-plus</v-icon>
             </v-btn>
         </div>
