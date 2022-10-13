@@ -33,6 +33,19 @@
                   />
                 </v-col>
 
+                <v-col
+                  cols="12"
+                >
+                  <v-select
+                    v-model="value"
+                    :items="items"
+                    chips
+                    label="Select condition(s)"
+                    multiple
+                    solo
+                  ></v-select>
+                </v-col>
+
                 <v-col cols="12">
                   <v-textarea
                     class="purple-input"
@@ -67,6 +80,7 @@
 
 <script>
 import customMessageService from '../../../../services/CustomMessageService'
+import conditionService from '../../../../services/ConditionService'
 
 export default {
     data() {
@@ -80,7 +94,20 @@ export default {
             rules: {
               required: (value) => !!value || 'Required.'
             },
+            items: ['foo', 'bar', 'fizz', 'buzz'],
+            value: []
         }
+    },
+    async mounted() {
+      const conditions = (await conditionService.index()).data
+      const temArry = []
+      conditions.forEach(element => {
+        temArry.push(element.name)
+      });
+
+      this.items = temArry
+      // this.value = temArry
+
     },
     methods: {
       async AddCustomMessage(id){
