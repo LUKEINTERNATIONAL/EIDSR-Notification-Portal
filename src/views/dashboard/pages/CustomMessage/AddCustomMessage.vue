@@ -41,6 +41,7 @@
                     :items="items"
                     chips
                     label="Select condition(s)"
+                    :rules="[rules.required]"
                     multiple
                     solo
                   ></v-select>
@@ -81,6 +82,7 @@
 <script>
 import customMessageService from '../../../../services/CustomMessageService'
 import conditionService from '../../../../services/ConditionService'
+import groupedConditionForCustomMessageService from '../../../../services/GroupedConditionForCustomMessageService'
 
 export default {
     data() {
@@ -94,23 +96,23 @@ export default {
             rules: {
               required: (value) => !!value || 'Required.'
             },
-            items: ['foo', 'bar', 'fizz', 'buzz'],
-            value: []
+            items: [],
+            value: [],
+            conditions: {}
         }
     },
     async mounted() {
       const conditions = (await conditionService.index()).data
+      this.conditions = conditions
       const temArry = []
       conditions.forEach(element => {
         temArry.push(element.name)
-      });
-
+      })
       this.items = temArry
-      // this.value = temArry
-
     },
     methods: {
       async AddCustomMessage(id){
+
             this.error = null
             const areAllFieldsFilledIn = Object
                .keys(this.message)
@@ -121,6 +123,18 @@ export default {
                 return
             }
             try {
+              for(let vl of this.value) {
+              const GCI = this.getCode(this.conditions, vl)
+              await groupedConditionForCustomMessageService.post({
+                generated_code_id: GCI,
+                customMessageCode: this.message.code
+              })
+            }
+            } catch (err) {
+              this.error = err.response.data.error
+            }
+
+            try {
               await customMessageService.post(this.message)
               this.$router.push({
                 name: 'Custom Messages'
@@ -128,6 +142,13 @@ export default {
             } catch (err) {
               this.error = err.response.data.error
             }
+      },
+      getCode(conditions, name) {
+        for(const condition of conditions) {
+            if (condition.name == name) {
+              return condition.generated_code_id
+            }
+        }
       }
     },
 }
