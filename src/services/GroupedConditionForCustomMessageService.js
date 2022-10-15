@@ -19,5 +19,9 @@ export default {
 
     delete (customMessageId) {
         return Api().delete(`groupedConditionForCustomMessage/${customMessageId}`)
+    },
+
+    findRelatedCustomMessageID (customMessageCode) {
+        return Api().get(`CustomMessageCode/${customMessageCode}`)
     }
 }

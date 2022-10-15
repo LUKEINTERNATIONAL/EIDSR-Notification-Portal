@@ -139,9 +139,9 @@ export default {
   methods: {
     async readDataFromAPI() {
     this.loading = true
-    console.log('##################')
-    console.log(this.options)
-    console.log('##################')
+    // console.log('##################')
+    // console.log(this.options)
+    // console.log('##################')
     const { page, itemsPerPage } = this.options
     //let pageNumber = page - 1
     const data = (await ConditionService.paginatedIndex(page-1,itemsPerPage)).data

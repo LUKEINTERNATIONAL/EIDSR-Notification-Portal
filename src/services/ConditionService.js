@@ -5,6 +5,10 @@ export default {
         return Api().get(`conditions`, {})
     },
 
+    getSingleCondition (generatedCodeId) {
+        return Api().get(`customMessageForGCI/${generatedCodeId}`)
+    },
+
     post (condition) {
         return Api().post(`condition`,condition)
     },

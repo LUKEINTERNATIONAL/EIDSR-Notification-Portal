@@ -52,6 +52,9 @@
               ID
             </th>
             <th class="primary--text">
+              conditions
+            </th>
+            <th class="primary--text">
               Code
             </th>
             <th class="primary--text">
@@ -72,6 +75,9 @@
               :key="message.id">
 
             <td>{{message.id}}</td>
+            <td>
+                <custom-list :items="items" style="float: left;"/>
+            </td>
             <td>{{message.code}}</td>
             <td>{{message.body}}</td>
             <td>{{ moment(message.createdAt).format('MMMM Do YYYY, h:mm:ss a') }}</td>
@@ -107,18 +113,22 @@
 </template>
 
 <script>
+import GroupedConditionForCustomMessageService from '@/services/GroupedConditionForCustomMessageService'
 import customMessageService from '../../../../services/CustomMessageService'
+import ConditionService from '@/services/ConditionService'
+import CustomList from '../../components/core/CustomList.vue'
 var moment = require('moment')
 
 export default {
-  components: {  },
+  components: { CustomList  },
   data() {
     return {
       messages: null,
       moment: moment,
       fullPage: false,
       search: '',
-      toBeFilteredMessages: null
+      toBeFilteredMessages: null,
+      items: []
     }
   },
   watch: {
@@ -167,7 +177,18 @@ export default {
       width: 100,
       height: 64,
     });
+    let aa = (await GroupedConditionForCustomMessageService.findRelatedCustomMessageID())
     this.messages = (await customMessageService.index()).data
+    for(const message of this.messages) {
+      const GCFCM = (await GroupedConditionForCustomMessageService.findRelatedCustomMessageID(message.code)).data
+      console.log('#####################')
+      for (const gcfcm of GCFCM) {
+        let bb = (await ConditionService.getSingleCondition(gcfcm.generated_code_id)).data
+        console.log(bb)
+        this.items.push(bb.name)
+      }
+      console.log('###########################')
+    }
     this.messages.reverse()
     this.toBeFilteredMessages = this.messages
     if (!!this.messages) {
