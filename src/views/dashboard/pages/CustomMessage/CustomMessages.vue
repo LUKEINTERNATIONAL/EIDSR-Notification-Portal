@@ -60,6 +60,9 @@
             <th class="primary--text">
               Message
             </th>
+            <th class="primary--text">
+              Active
+            </th>
              <th class="primary--text">
               Date
             </th>
@@ -76,10 +79,13 @@
 
             <td>{{message.id}}</td>
             <td>
-                <custom-list :items="items" style="float: left;"/>
+                <custom-list :items="message.items" style="float: left;"/>
             </td>
             <td>{{message.code}}</td>
             <td>{{message.body}}</td>
+            <td>
+                <switch-slide :active="message.active" :customMessageId="message.id"/>
+            </td>
             <td>{{ moment(message.createdAt).format('MMMM Do YYYY, h:mm:ss a') }}</td>
             <td class="action-edit-btn">
 
@@ -117,13 +123,15 @@ import GroupedConditionForCustomMessageService from '@/services/GroupedCondition
 import customMessageService from '../../../../services/CustomMessageService'
 import ConditionService from '@/services/ConditionService'
 import CustomList from '../../components/core/CustomList.vue'
+import SwitchSlide from '../../components/core/SwitchSlide.vue'
+
 var moment = require('moment')
 
 export default {
-  components: { CustomList  },
+  components: { CustomList, SwitchSlide  },
   data() {
     return {
-      messages: null,
+      messages: [],
       moment: moment,
       fullPage: false,
       search: '',
@@ -178,16 +186,16 @@ export default {
       height: 64,
     });
     let aa = (await GroupedConditionForCustomMessageService.findRelatedCustomMessageID())
-    this.messages = (await customMessageService.index()).data
-    for(const message of this.messages) {
+    const messages = (await customMessageService.index()).data
+    for(const message of messages) {
+      Object.assign( message, {items: []})
       const GCFCM = (await GroupedConditionForCustomMessageService.findRelatedCustomMessageID(message.code)).data
-      console.log('#####################')
       for (const gcfcm of GCFCM) {
         let bb = (await ConditionService.getSingleCondition(gcfcm.generated_code_id)).data
-        console.log(bb)
-        this.items.push(bb.name)
+       message.items.push(bb.name)
+       this.items.push(bb.name)
       }
-      console.log('###########################')
+      this.messages.push(message)
     }
     this.messages.reverse()
     this.toBeFilteredMessages = this.messages

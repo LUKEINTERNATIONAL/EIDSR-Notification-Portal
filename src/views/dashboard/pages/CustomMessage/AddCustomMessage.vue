@@ -90,6 +90,7 @@ export default {
             message: {
                 code: this.code,
                 body: this.body,
+                active: 1
             },
 
             error: null,

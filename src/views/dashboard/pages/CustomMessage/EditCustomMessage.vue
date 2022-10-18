@@ -32,6 +32,20 @@
                     v-model="message.code"
                   />
                 </v-col>
+                
+                <v-col
+                  cols="12"
+                >
+                  <v-select
+                    v-model="value"
+                    :items="items"
+                    chips
+                    label="Select condition(s)"
+                    :rules="[rules.required]"
+                    multiple
+                    solo
+                  ></v-select>
+                </v-col>
 
                 <v-col cols="12">
                   <v-textarea

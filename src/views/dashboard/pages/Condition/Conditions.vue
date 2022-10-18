@@ -37,44 +37,6 @@
         </div>
       </div>
     </template>
-
-      <!-- <v-simple-table
-        fixed-header
-        height="500px"
-      >
-        <thead>
-          <tr>
-            <th class="primary--text">
-              ID
-            </th>
-            <th class="primary--text">
-              Code
-            </th>
-            <th class="primary--text">
-              Name
-            </th>
-            <th class="primary--text">
-              Active
-            </th>
-            <th class="primary--text">
-              Paired With
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr v-for="_condition in conditions"
-           :key="_condition.id">
-           <td>{{_condition.id}}</td>
-            <td>{{_condition.code}}</td>
-            <td>{{_condition.name}}</td>
-            <td>
-              <switch-slide :active="_condition.active" />
-            </td>
-             <td>{{_condition.paired_with_conditions_ids}}</td>
-          </tr>
-        </tbody>
-      </v-simple-table> -->
     <v-data-table
     :headers="headers"
     :items="conditions"
@@ -115,8 +77,8 @@ export default {
         },
         { text: 'Code', value: 'code' },
         { text: 'Name', value: 'name' },
-        { text: 'Active', value: 'active' },
-        { text: 'Paired IDs', value: 'paired_with_conditions_ids' }
+        // { text: 'Active', value: 'active' },
+        // { text: 'Paired IDs', value: 'paired_with_conditions_ids' }
       ],
       conditions: [],
       moment: moment,
