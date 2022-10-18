@@ -19,5 +19,14 @@ export default {
 
     paginatedIndex(page, size) {
         return Api().get(`paginatedConditions/${page}/${size}`)
-    }
+    },
+
+    getCode(conditions, name) {
+        for(const condition of conditions) {
+            if (condition.name == name) {
+              return condition.generated_code_id
+            }
+        }
+      }
+
 }

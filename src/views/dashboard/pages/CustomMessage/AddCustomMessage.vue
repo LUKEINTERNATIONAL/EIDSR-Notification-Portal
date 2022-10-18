@@ -125,7 +125,7 @@ export default {
             }
             try {
               for(let vl of this.value) {
-              const GCI = this.getCode(this.conditions, vl)
+              const GCI = conditionService.getCode(this.conditions, vl)
               await groupedConditionForCustomMessageService.post({
                 generated_code_id: GCI,
                 customMessageCode: this.message.code
@@ -143,13 +143,6 @@ export default {
             } catch (err) {
               this.error = err.response.data.error
             }
-      },
-      getCode(conditions, name) {
-        for(const condition of conditions) {
-            if (condition.name == name) {
-              return condition.generated_code_id
-            }
-        }
       }
     },
 }

@@ -23,5 +23,10 @@ export default {
 
     findRelatedCustomMessageID (customMessageCode) {
         return Api().get(`CustomMessageCode/${customMessageCode}`)
+    },
+
+    multipleDelete (customMessageCode) {
+        return Api().get(`groupedConditionForCustomMessage/${customMessageCode}`)
     }
+    
 }

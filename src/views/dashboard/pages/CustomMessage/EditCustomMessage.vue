@@ -122,6 +122,21 @@ export default {
             } catch (err) {
               this.error = err.response.data.error
             }
+            /** */
+            try {
+              const GCFCM = (await GroupedConditionForCustomMessageService.multipleDelete(this.message.code))
+              if(GCFCM) {
+                for(let vl of this.value) {
+                  const GCI = conditionService.getCode(this.conditions, vl)
+                  await GroupedConditionForCustomMessageService.post({
+                    generated_code_id: GCI,
+                    customMessageCode: this.message.code
+                  })
+                }
+              }
+            } catch (error) {
+              this.error = err.response.data.error
+            }
       },
       async getListItems() {
          /** drop list */
