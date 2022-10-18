@@ -26,6 +26,7 @@
                   <v-text-field
                     class="purple-input"
                     required
+                    disabled
                     label="Code"
                     type="text"
                     :rules="[rules.required]"
@@ -80,7 +81,9 @@
 </template>
 
 <script>
+import GroupedConditionForCustomMessageService from '@/services/GroupedConditionForCustomMessageService'
 import customMessageService from '../../../../services/CustomMessageService'
+import conditionService from '../../../../services/ConditionService'
 
 export default {
     data() {
@@ -95,6 +98,9 @@ export default {
             rules: {
               required: (value) => !!value || 'Required.'
             },
+            items: [],
+            value: [],
+            conditions: {}
         }
     },
     methods: {
@@ -116,6 +122,23 @@ export default {
             } catch (err) {
               this.error = err.response.data.error
             }
+      },
+      async getListItems() {
+         /** drop list */
+         const conditions = (await conditionService.index()).data
+         this.conditions = conditions
+         const temArry = []
+         conditions.forEach(element => {
+            temArry.push(element.name)
+         })
+         this.items = temArry
+      },
+      async getListValues(code) {
+          const GCFCM = (await GroupedConditionForCustomMessageService.findRelatedCustomMessageID(code)).data
+          for (const gcfcm of GCFCM) {
+            let bb = (await conditionService.getSingleCondition(gcfcm.generated_code_id)).data
+            this.value.push(bb.name)
+          }
       }
     },
      async mounted() {
@@ -127,10 +150,13 @@ export default {
              this.message.code = data.code
              this.message.body = data.body
 
+             await this.getListValues(this.message.code)
+
          } catch (err) {
              console.log(err.response.data.error)
          }
-     }
+         await this.getListItems()
+    }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
