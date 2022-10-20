@@ -4,7 +4,7 @@ import router from '../router'
 
 export default () => {
     const customAxios = axios.create ({
-        baseURL: 'http://0.0.0.0:8186'
+        baseURL: 'http://192.168.11.175:8186'
     })
 
     // Step-2: Create request, response & error handlers
