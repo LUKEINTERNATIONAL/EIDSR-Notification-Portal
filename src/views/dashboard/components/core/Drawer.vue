@@ -77,7 +77,7 @@
         :key="i"
       >
         <v-expansion-panel-header expand-icon="mdi-menu-down">
-          <h4> {{ AdminDescription }} </h4>
+          <h4 style="font-size: large;"> {{ AdminDescription }} </h4>
         </v-expansion-panel-header>
           <v-expansion-panel-content>
             <template v-for="(item, i) in computedAdminItems" v-if="isUserAdmin">
@@ -242,18 +242,13 @@
   }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .v-list-item .v-list-item__title, .v-list-item .v-list-item__subtitle {
   line-height: 1.2;
   font-weight: 500 !important;
   font-size: 18px !important;
 }
 .sidepanelFont .v-list-item .v-list-item__title {
-  font-weight: 500 !important;
-  font-size: 20px !important;
-  line-height: inherit !important;
-}
-.v-list-item .v-list-item__title, .v-list--dense .v-list-item .v-list-item__subtitle {
   font-weight: 500 !important;
   font-size: 20px !important;
   line-height: inherit !important;
