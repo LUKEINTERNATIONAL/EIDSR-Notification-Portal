@@ -71,17 +71,41 @@
           :item="item"
         />
       </template>
+      <v-expansion-panels class="mb-6" v-if="isUserAdmin">
+      <v-expansion-panel
+        v-for="(item,i) in "
+        :key="i"
+      >
+        <v-expansion-panel-header expand-icon="mdi-menu-down">
+          <h4 style="font-size: large;"> {{ AdminDescription }} </h4>
+        </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <template v-for="(item, i) in computedAdminItems" v-if="isUserAdmin">
+            <base-item-group
+              v-if="item.children"
+              :key="`group-${i}`"
+              :item="item"
+            >
+              <!--  -->
+            </base-item-group>
+
+            <base-item class="sidepanelFont"
+              v-else
+              :key="`item-${i}`"
+              :item="item"
+            />
+          </template>
+          </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
     </v-list>
-
-
   </v-navigation-drawer>
 </template>
 
 <script>
   // Utilities
-  import {
-    mapState,
-  } from 'vuex'
+  import { mapState } from 'vuex'
+  import store from '../../../../store'
 
   export default {
     name: 'DashboardCoreDrawer',
@@ -140,15 +164,32 @@
           icon: 'mdi-map-marker',
           to: '/maps/google-maps',
         },
-        {
-          title: 'notifications',
-          icon: 'mdi-bell',
-          to: '/components/notifications',
-        },
+        // {
+        //   title: 'notifications',
+        //   icon: 'mdi-bell',
+        //   to: '/components/notifications',
+        // },
       ],
-      image: {
-      msg: 'msg.jpg'
-      }
+      adminItems: [
+        {
+          icon: 'mdi-cloud-check',
+          title: 'Facilities',
+          to: '/pages/facility',
+        },
+        { 
+          icon: 'mdi-briefcase-variant',
+          title: 'Conditions',
+          to: '/pages/conditions'
+        },
+        {
+          icon: 'mdi-comment-quote',
+          title: 'Custom Messages',
+          to:'/pages/customMessages'
+        }
+      ],
+      image: { msg: 'msg.jpg' },
+      AdminDescription: 'Admin Controlls',
+      isUserAdmin: false
     }),
 
     computed: {
@@ -164,12 +205,19 @@
       computedItems () {
         return this.items.map(this.mapItem)
       },
+      computedAdminItems () {
+        return this.adminItems.map(this.mapItem)
+      },
       profile () {
         return {
           avatar: true,
           title: this.$t('avatar'),
         }
       },
+    },
+
+    mounted() {
+       this.changeValue()
     },
 
     methods: {
@@ -180,6 +228,16 @@
           title: this.$t(item.title),
         }
       },
+      /** isUserAdmin */
+      changeValue() {
+        try {
+          if(store.state.userRoleId == 824) {
+            this.isUserAdmin = true
+          }
+        } catch (error) {
+          console.error('an error has occured trying to read isUserAdmin : '+error)
+        }
+      }
     },
   }
 </script>

@@ -16,7 +16,9 @@ export default new Vuex.Store({
     token: null,
     user: null,
     isUserLoggedIn: false,
-    respondentIdEdit: null
+    respondentIdEdit: null,
+    userRoleId: null,
+    customMessageEditId: null
   },
   mutations: {
     SET_BAR_IMAGE (state, payload) {
@@ -39,6 +41,12 @@ export default new Vuex.Store({
     },
     setRespondentIdEdit(state, id) {
       state.respondentIdEdit = id
+    },
+    setUserRoleId(state, id) {
+      state.userRoleId = id
+    },
+    setCustomMessageEditId(state, id) {
+      state.customMessageEditId = id
     }
   },
 
@@ -51,6 +59,12 @@ export default new Vuex.Store({
     },
     setRespondentIdEdit({commit}, id) {
       commit('setRespondentIdEdit', id)
+    },
+    setUserRoleId({commit}, id) {
+      commit('setUserRoleId', id)
+    },
+    setCustomMessageEditId({commit}, id) {
+      commit('setCustomMessageEditId', id)
     }
   },
 })
