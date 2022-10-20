@@ -164,11 +164,11 @@
           icon: 'mdi-map-marker',
           to: '/maps/google-maps',
         },
-        {
-          title: 'notifications',
-          icon: 'mdi-bell',
-          to: '/components/notifications',
-        },
+        // {
+        //   title: 'notifications',
+        //   icon: 'mdi-bell',
+        //   to: '/components/notifications',
+        // },
       ],
       adminItems: [
         {
@@ -253,8 +253,9 @@
   font-size: 20px !important;
   line-height: inherit !important;
 }
-.drawer-seplator-label {
-  padding: 4%;
-  color: dimgray;
+.v-list-item .v-list-item__title, .v-list--dense .v-list-item .v-list-item__subtitle {
+  font-weight: 500 !important;
+  font-size: 20px !important;
+  line-height: inherit !important;
 }
 </style>
