@@ -101,6 +101,7 @@ export default {
           })
           this.$store.dispatch('setToken', response.data.token)
           this.$store.dispatch('setUser', response.data.user)
+          this.$store.dispatch('setUserRoleId', response.data.user.role_id)
           //this.connectionStatus = true
           this.$router.push({
             name: 'Dashboard'

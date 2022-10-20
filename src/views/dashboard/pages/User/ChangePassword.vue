@@ -83,7 +83,9 @@
 
 <script>
 import userService from '../../../../services/UserService'
+import respondentService from '../../../../services/RespondentService'
 import AuthenticationService from '../../../../services/AuthenticationService'
+import store from '../../../../store'
 
 export default {
     data() {
@@ -113,15 +115,28 @@ export default {
               password: this.current_password
             })
             if (response) {
-              try {
-                await userService.put({
-                  password: this.new_password_first
-                }, this.userID)
-                this.$router.push({
-                  name: 'Dashboard'
-                })
-              } catch (error) {
-                this.error = error.response.data.error
+              if(store.state.userRoleId == 824) {
+                  try {
+                    await userService.put({
+                    password: this.new_password_first
+                  }, this.userID)
+                  this.$router.push({
+                    name: 'Dashboard'
+                  })
+                } catch (error) {
+                  this.error = error.response.data.error
+                }
+              } else {
+                try {
+                  await respondentService.put({
+                    password: this.new_password_first
+                  }, this.userID)
+                  this.$router.push({
+                    name: 'Dashboard'
+                  })
+                } catch (error) {
+                  this.error = error.response.data.error
+                }
               }
             }
           } catch (error) {

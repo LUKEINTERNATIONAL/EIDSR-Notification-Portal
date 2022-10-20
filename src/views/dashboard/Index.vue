@@ -1,6 +1,5 @@
 <template>
   <v-app >
-     <svg-icon type="mdi" :path="path" :size="48">
     <dashboard-core-app-bar />
 
     <dashboard-core-drawer />
@@ -8,7 +7,7 @@
     <dashboard-core-view />
 
     <dashboard-core-settings />
-    </svg-icon>
+
   </v-app>
 </template>
 

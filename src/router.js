@@ -50,9 +50,29 @@ const router = new Router({
           component: () => import('@/views/dashboard/pages/Message/Messages'),
         },
         {
+          name: 'Custom Messages',
+          path: 'pages/customMessages',
+          component: () => import('@/views/dashboard/pages/CustomMessage/CustomMessages')
+        },
+        {
+          name: 'Add Custom Message',
+          path: 'pages/addCustomMessage',
+          component: () => import('@/views/dashboard/pages/CustomMessage/AddCustomMessage')
+        },
+        {
+          name: 'Edit Custom Message',
+          path: 'pages/editcustomMesage',
+          component: () => import('@/views/dashboard/pages/CustomMessage/EditCustomMessage')
+        },
+        {
           name: 'Cases',
           path: 'pages/cases',
           component: () => import('@/views/dashboard/pages/Case/Cases'),
+        },
+        {
+          name: 'Conditions',
+          path: 'pages/conditions',
+          component: () => import('@/views/dashboard/pages/Condition/Conditions')
         },
         {
           name: 'Facilities',
