@@ -71,34 +71,34 @@
           :item="item"
         />
       </template>
+      <v-expansion-panels class="mb-6" v-if="isUserAdmin">
+      <v-expansion-panel
+        v-for="(item,i) in "
+        :key="i"
+      >
+        <v-expansion-panel-header expand-icon="mdi-menu-down">
+          <h4> {{ AdminDescription }} </h4>
+        </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <template v-for="(item, i) in computedAdminItems" v-if="isUserAdmin">
+            <base-item-group
+              v-if="item.children"
+              :key="`group-${i}`"
+              :item="item"
+            >
+              <!--  -->
+            </base-item-group>
 
-    <div class="drawer-seplator" v-if="isUserAdmin">
-      <hr>
-        <div class="drawer-seplator-label">
-          <label>
-            <h4> {{ AdminDescription }} </h4>
-          </label>
-        </div>
-      <hr>
-    </div>
+            <base-item class="sidepanelFont"
+              v-else
+              :key="`item-${i}`"
+              :item="item"
+            />
+          </template>
+          </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
     </v-list>
-
-    <template v-for="(item, i) in computedAdminItems" v-if="isUserAdmin">
-    <base-item-group
-      v-if="item.children"
-      :key="`group-${i}`"
-      :item="item"
-    >
-      <!--  -->
-    </base-item-group>
-
-    <base-item class="sidepanelFont"
-      v-else
-      :key="`item-${i}`"
-      :item="item"
-    />
-  </template>
-
   </v-navigation-drawer>
 </template>
 
