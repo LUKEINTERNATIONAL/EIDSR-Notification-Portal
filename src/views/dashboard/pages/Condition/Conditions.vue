@@ -32,111 +32,114 @@
           v-model="search"
           label="Search"
           class="mx-4"
-          append-icon="mdi-magnify"
           ></v-text-field>
         </div>
       </div>
     </template>
-    <v-data-table
-    :headers="headers"
-    :items="conditions"
-    :items-per-page="5"
-    :search="search"
-    :page="page"
-    :pageCount="numberOfPages"
-    :options.sync="options"
-    :server-items-length="total"
-    :loading="loading"
-    class="elevation-1 mytable"
-    >
-    <template slot="item.active" slot-scope="props">
-      <switch-slide :active="props.item.active" />
-    </template>
-    </v-data-table>
+
+      <v-simple-table>
+        <thead>
+          <tr>
+            <th class="primary--text">
+              ID
+            </th>
+            <th class="primary--text">
+              Code
+            </th>
+            <th class="primary--text">
+              Name
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="_condition in conditions"
+           :key="_condition.id">
+            <td>{{_condition.id}}</td>
+            <td>{{_condition.generated_code_id}}</td>
+            <td>{{_condition.name}}</td>
+          </tr>
+        </tbody>
+      </v-simple-table>
     </base-material-card>
 
-    <div class="py-3"/>
+    <div class="py-3" />
   </v-container>
 </template>
 
 <script>
-import ConditionService from '../../../../services/ConditionService'
-import SwitchSlide from '../../components/core/SwitchSlide.vue'
+import conditionService from '../../../../services/ConditionService'
 var moment = require('moment')
 
 export default {
-  components: { SwitchSlide },
+  components: {  },
   data() {
     return {
-      headers: [
-        {
-          text: 'id',
-          align: 'start',
-          sortable: false,
-          value: 'id',
-        },
-        { text: 'Code', value: 'code' },
-        { text: 'Name', value: 'name' },
-        // { text: 'Active', value: 'active' },
-        // { text: 'Paired IDs', value: 'paired_with_conditions_ids' }
-      ],
-      conditions: [],
+      conditions: null,
       moment: moment,
       search: '',
-      page: 0,
-      numberOfPages: 0,
-      total: 0,
-      options: {},
-      loading: true,
+      toBeFilteredConditions: null
     }
   },
   watch: {
-    options: {
-      handler() {
-        this.readDataFromAPI();
-      },
-    },
-    //deep: true,
+    search(newQuery, oldQuery) {
+      if(this.conditions != null) {
+        let tempFiltredConditions = []
+        this.toBeFilteredConditions.forEach(_condition => {
+          const position = _condition.name.toLowerCase().search(newQuery.toLowerCase())
+          if (position > -1) {
+            tempFiltredConditions.push(_condition)
+          }
+        })
+        this.conditions = tempFiltredConditions
+      }
+    }
   },
   methods: {
-    async readDataFromAPI() {
-    this.loading = true
-    // console.log('##################')
-    // console.log(this.options)
-    // console.log('##################')
-    const { page, itemsPerPage } = this.options
-    //let pageNumber = page - 1
-    const data = (await ConditionService.paginatedIndex(page-1,itemsPerPage)).data
-    this.conditions = data.rows
-    this.total = data.count
-    this.numberOfPages = this.total;
+  },
+  async mounted() {
+      let loader = this.$loading.show({
+      // Optional parameters
+      container: this.fullPage ? null : this.$refs.formContainer,
+      canCancel: false,
+      loader: 'spinner',
+      width: 100,
+      height: 64,
+    });
+    this.conditions = (await conditionService.index()).data
 
     if(!!this.conditions){
-      this.conditions =  this.conditions.reverse()
-      this.loading = false
+      this.toBeFilteredConditions = this.conditions
+      loader.hide()
     }
-    }
-  },
-
-  async mounted() {
-    this.readDataFromAPI()
   },
 }
+</script>
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .v-icon {
   font-size: 70px;
 }
-
+.action-edit-btn .v-btn--fab.v-size--default{
+  height: 30px;
+  width: 30px;
+  color: #e46048;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+  font-weight: 400 !important;
+  font-size: 15px !important;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td, .v-data-table > .v-data-table__wrapper > table > thead > tr > td, .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+  font-weight: 400 !important;
+  font-size: 15px !important;
+}
 .msg-bn {
   font-size: 25px !important;
   float: bottom;
 }
-
-.theme--light.v-data-table {
-  background-color: #f8f8f8;
-  color: rgba(0, 0, 0, 0.87);
-  font-weight: 100;
+.v-data-table {
+  overflow: scroll !important;
+  max-height: 515px !important;
 }
 </style>

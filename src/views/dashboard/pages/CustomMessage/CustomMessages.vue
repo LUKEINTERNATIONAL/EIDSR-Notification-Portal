@@ -163,6 +163,7 @@ export default {
         try {
           const message = (await customMessageService.delete(id)).data
           if(!!message)
+            GroupedConditionForCustomMessageService.multipleDelete(message.code)
             this.$router.go(this.$router.currentRoute)
         } catch (err) {
           console.log(err)
