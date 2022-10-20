@@ -27,7 +27,7 @@
     "in-view": "^0.6.1",
     "material-design-icons": "^3.0.1",
     "material-icons": "^1.10.4",
-    "moment": "2.24.0",
+    "moment": "2.29.2",
     "nodemailer": "^6.7.2",
     "vue": "^2.6.11",
     "vue-apexcharts": "^1.6.2",
