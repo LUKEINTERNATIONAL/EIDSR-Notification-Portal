@@ -1,14 +1,13 @@
 {
-<<<<<<< HEAD
-    "folders": []
-=======
 	"folders": [
 		{
 			"path": "."
 		},
 		{
 			"path": "../SMS-Portal-API"
+		},
+		{
+			"path": "../RemoteScripts"
 		}
 	]
->>>>>>> b03705432f3a3ffd8b551b89404bc87782ae3f1c
 }
