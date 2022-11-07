@@ -10,7 +10,6 @@ import geoData from '@amcharts/amcharts5-geodata/malawiLow'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import conditionService from '../../../../services/ConditionService'
 
-
 export default {
   data() {
     return {
@@ -72,7 +71,6 @@ export default {
       const data = []
       const conditions = (await conditionService.index()).data
       conditions.forEach(condition => {
-        //console.log(condition)
         if(condition.name !== this.condition_to_ignore2) {
           if (condition.name !== this.condition_to_ignore1) {
             if(condition.color !== null)
@@ -90,10 +88,10 @@ export default {
       root.setThemes([am5themes_Animated.new(root)])
       let chart = root.container.children.push(
         am5map.MapChart.new(root, {
-          panX: "rotateX",
+          panX: "none",
           panY: "none",
           projection: am5map.geoNaturalEarth1(),
-          layout: root.verticalLayout
+          layout: root.horizontalLayout
     
         })
       )
@@ -125,12 +123,10 @@ export default {
         nameField: "name",
         fillField: "color",
         strokeField: "color",
-        centerX: am5.percent(70),
-        x: am5.percent(95),
         layout: root.verticalLayout
       }));
       //
-      legend.data.setAll(await this.legendData())
+      legend.data.setAll((await this.legendData()))
     }
   },
   async mounted() {
