@@ -8,16 +8,37 @@ import * as am5 from '@amcharts/amcharts5'
 import * as am5map from '@amcharts/amcharts5/map'
 import geoData from '@amcharts/amcharts5-geodata/malawiLow'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
+import conditionService from '../../../../services/ConditionService'
 
 
 export default {
-  name: 'HelloWorld',
-  mounted() {
-
-    let root = am5.Root.new(this.$refs.chartdiv);
-
-    root.setThemes([am5themes_Animated.new(root)]);
-
+  data() {
+    return {
+      condition_to_ignore1: 'Acute hemorrhagic fever syndrome (Ebola, Marburg, Lassa Fever, Rift Valley Fever (RVF), Crimean-Congo) ',
+      condition_to_ignore2: 'Any public health event of international concern (infectious, zoonotic, food borne, chemical, radio nuclear or due to an unknown condition)'
+    }
+  },
+  methods: {
+    async legendData() {
+      const data = []
+      const conditions = (await conditionService.index()).data
+      conditions.forEach(condition => {
+        //console.log(condition)
+        if(condition.name !== this.condition_to_ignore2) {
+          if (condition.name !== this.condition_to_ignore1) {
+            data.push({
+              name: condition.name,
+              color: am5.color(0xff621f)
+            })
+          }
+        }
+      })
+      return data
+    }
+  },
+  async mounted() {
+    let root = am5.Root.new(this.$refs.chartdiv)
+    root.setThemes([am5themes_Animated.new(root)])
     let chart = root.container.children.push(
       am5map.MapChart.new(root, {
         panX: "rotateX",
@@ -27,7 +48,6 @@ export default {
   
       })
     )
-
     // Create polygon series
     var polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
@@ -35,7 +55,6 @@ export default {
         exclude: ["AQ"]
       })
     )
-
     // GeoJSON data
     var cities = {
       "type": "FeatureCollection",
@@ -85,14 +104,13 @@ export default {
                     }, 
       ]
     }
-
     //Create point series
     var pointSeries = chart.series.push(
       am5map.MapPointSeries.new(root, {
         geoJSON: cities
       })
     )
-
+    //
     pointSeries.bullets.push(function() {
       return am5.Bullet.new(root, {
         sprite: am5.Circle.new(root, {
@@ -101,7 +119,6 @@ export default {
         })
       });
     });
-
     // Add legend
     let legend = chart.children.push(am5.Legend.new(root, {
       nameField: "name",
@@ -111,15 +128,8 @@ export default {
       x: am5.percent(95),
       layout: root.verticalLayout
     }));
-
-    legend.data.setAll([{
-      name: "Under budget",
-      color: am5.color(0x297373)
-    }, {
-      name: "Over budget",
-      color: am5.color(0xff621f)
-    }]);
-
+    //
+    legend.data.setAll(await this.legendData());
 }
 }
 </script>
