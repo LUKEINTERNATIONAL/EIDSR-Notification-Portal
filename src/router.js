@@ -106,6 +106,11 @@ const router = new Router({
           path: 'maps/google-maps',
           component: () => import('@/views/dashboard/maps/GoogleMaps'),
         },
+        {
+          name: 'Case Heat Map',
+          path: 'maps/caseheatmap',
+          component: () => import('@/views/dashboard/pages/Map/CaseHeatMap'),
+        }
       ],
     },
     {
@@ -117,15 +122,15 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if ( store.state.isUserLoggedIn == true && to.name == 'login') {
-    next({name: 'Dashboard'})
+  if (store.state.isUserLoggedIn == true && to.name == 'login') {
+    next({ name: 'Dashboard' })
   } else {
-     if( to.name !== 'login' &&  store.state.isUserLoggedIn == false) {
-      next({name: 'login'})
-     } else {
+    if (to.name !== 'login' && store.state.isUserLoggedIn == false) {
+      next({ name: 'login' })
+    } else {
       next()
-     }
-      next()
+    }
+    next()
   }
 });
 

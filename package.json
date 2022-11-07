@@ -14,6 +14,8 @@
     "email": "node src/services/Email/index.js"
   },
   "dependencies": {
+    "@amcharts/amcharts5": "^5.2.31",
+    "@amcharts/amcharts5-geodata": "^5.0.6",
     "@jamescoyle/vue-icon": "^0.1.2",
     "@material-ui/icons": "^4.11.2",
     "@mdi/font": "^6.5.95",
