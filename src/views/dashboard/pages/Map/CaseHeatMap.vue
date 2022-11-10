@@ -9,34 +9,23 @@ import * as am5map from '@amcharts/amcharts5/map'
 import geoData from '@amcharts/amcharts5-geodata/malawiLow'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import conditionService from '../../../../services/ConditionService'
+import geographicCaseService from '../../../../services/GeographicCaseService'
 
 export default {
   data() {
     return {
+      geographicCaseData: null,
+      caseColors: null,
+      conditions: null,
       condition_to_ignore1: 'Acute hemorrhagic fever syndrome (Ebola, Marburg, Lassa Fever, Rift Valley Fever (RVF), Crimean-Congo) ',
       condition_to_ignore2: 'Any public health event of international concern (infectious, zoonotic, food borne, chemical, radio nuclear or due to an unknown condition)',
-      cities: [
-        {
-          title: "Lilongwe",
-          latitude: -13.937149,
-          longitude: 33.774119,
-          color: '#e6b7f6'
-        },
-        {
-          title: "Sadzi",
-          latitude: -15.874580,
-          longitude: 35.066480,
-          color: '#af4e15'
-        },
-      ] 
     }
   },
   methods: {
     //
     async legendData() {
       const data = []
-      const conditions = (await conditionService.index()).data
-      conditions.forEach(condition => {
+      this.conditions.forEach(condition => {
         if(condition.name !== this.condition_to_ignore2) {
           if (condition.name !== this.condition_to_ignore1) {
             if(condition.color !== null)
@@ -83,30 +72,31 @@ export default {
           exclude: ["AQ"]
         })
       )
-      var pointSeries = chart.series.push(am5map.MapPointSeries.new(root, {}));
-      var colorset = am5.ColorSet.new(root, {});
-
+      var pointSeries = chart.series.push(am5map.MapPointSeries.new(root, {}))
+      var colorset = am5.ColorSet.new(root, {})
+      const array = this.caseColors
+      const colors = array.values()
+      const colors2 = array.values()
+      
       pointSeries.bullets.push(function () {
         var container = am5.Container.new(root, {})
-
-        console.log(colorset.next())
-
-        var circle = container.children.push(
+        //center dot
+        var circle2 = container.children.push(
           am5.Circle.new(root, {
-            radius: 5,
+            radius: 4,
             tooltipY: 0,
-            fill: colorset.next(),
-            strokeOpacity: 0,
+            fill: am5.color(colors2.next().value),
+            strokeOpacity: 2,
             tooltipText: "{title}"
           })
         );
-
-        var circle2 = container.children.push(
+        // outer dot
+        var circle = container.children.push(
           am5.Circle.new(root, {
-            radius: 5,
+            radius: 3,
             tooltipY: 0,
-            fill: colorset.next(),
-            strokeOpacity: 0,
+            fill: am5.color(colors.next().value),
+            strokeOpacity: 5,
             tooltipText: "{title}"
           })
         );
@@ -133,17 +123,26 @@ export default {
         })
       })
       //add location
-      for (var i = 0; i < this.cities.length; i++) {
-        var city = this.cities[i];
-        addCity(city.longitude, city.latitude, city.title, city.color);
+      for (var i = 0; i < this.geographicCaseData.length; i++) {
+        var location = this.geographicCaseData[i]
+        for(var J = 0; J < location.count; J++) {
+          const label = location.name +': '+location.condition_name +': '+location.count
+          addLocation(location.longitude, location.latitude, label, location.color)
+        }
+        //addLocation(location.longitude, location.latitude, location.name)
       }
 
-      function addCity(longitude, latitude, title, color) {
+      function generateRandomNumber() {
+          return Math.random() * 0.08
+      }
+
+      function addLocation(longitude, latitude, name) {
+        longitude = parseFloat(longitude) + parseFloat(generateRandomNumber())
+        latitude  = parseFloat(latitude) + parseFloat(generateRandomNumber())
         pointSeries.data.push({
           geometry: { type: "Point", coordinates: [longitude, latitude] },
-          title: title,
-          color: color
-        });
+          title: name,
+        })
       }
       // Add legend
       let legend = chart.children.push(am5.Legend.new(root, {
@@ -155,10 +154,59 @@ export default {
       //
       legend.data.setAll((await this.legendData()))
       // Make stuff animate on load
-      chart.appear(1000, 100);
-    }
+      chart.appear(1000, 100)
+    },
+    toArrayOfColors(obj) {
+      const conditions = this.conditions
+      function FindColor(_name) {
+        let color
+        conditions.forEach(condition => {
+            if(condition.name == _name) {
+              color = condition.color
+            }
+          })
+
+        return color
+      }
+      //
+      const array = []
+      obj.forEach(item => {
+        for(var J = 0; J < item.count; J++) {
+          array.push(
+            FindColor(item.condition_name)
+          )
+        }
+      })
+      //
+      return array
+    },
   },
   async mounted() {
+    this.conditions = (await conditionService.index()).data
+    this.geographicCaseData =  (await geographicCaseService.index()).data
+
+    var output = [];
+    this.geographicCaseData.forEach(function(item) {
+      var existing = output.filter(function(v, i) {
+        return v.name == item.name && v.condition_name == item.condition_name
+      })
+
+      if (existing.length) {
+        var existingIndex = output.indexOf(existing[0]);
+        output[existingIndex].count += parseInt(item.count);
+      } else {
+        if (typeof item.count == 'string')
+          item.count = [item.count];
+        output.push(item);
+      }
+    })
+    this.geographicCaseData = output
+
+    if(this.geographicCaseData) {
+      if(this.conditions)
+      this.caseColors = this.toArrayOfColors(this.geographicCaseData)
+      console.log(this.caseColors)
+    }
     this.loadMap()
   }
 }
@@ -168,7 +216,7 @@ export default {
 <style scoped>
 .hello {
   width: 100%;
-  height: 89%;
+  height: 100%;
   background-color: rgb(255, 255, 255);
 }
 </style>
