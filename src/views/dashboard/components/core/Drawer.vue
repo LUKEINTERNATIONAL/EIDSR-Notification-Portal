@@ -73,8 +73,7 @@
       </template>
       <v-expansion-panels class="mb-6" v-if="isUserAdmin">
       <v-expansion-panel
-        v-for="(item,i) in "
-        :key="i"
+    
       >
         <v-expansion-panel-header expand-icon="mdi-menu-down">
           <h4 style="font-size: large;"> {{ AdminDescription }} </h4>
@@ -159,10 +158,15 @@
         //   icon: 'mdi-chart-bubble',
         //   to: '/components/icons',
         // },
+        // {
+        //   title: 'google',
+        //   icon: 'mdi-map-marker',
+        //   to: '/maps/google-maps',
+        // },
         {
-          title: 'google',
+          title: 'Cases on Map',
           icon: 'mdi-map-marker',
-          to: '/maps/google-maps',
+          to: '/maps/caseheatmap',
         },
         // {
         //   title: 'notifications',

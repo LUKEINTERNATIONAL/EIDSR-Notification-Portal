@@ -522,11 +522,11 @@ import MessageService from "./../../services/MessageService"
                                 //'Meningococcal meningitis',
                                 //'Neonatal tetanus',
                                 //'Plague',
-                                'Rabies (confirmed cases)',
-                                //'Severe Acute Respiratory Syndrome (SARS)',
+                                //'Rabies (confirmed cases)',
+                                'Severe Acute Respiratory Syndrome (SARS)',
                                 //'Smallpox',
-                                //'Typhoid fever',
-                                'Yellow fever',
+                                'Typhoid fever',
+                                //'Yellow fever',
                                 ]
                     ){
         let totalData = (await caseService.getYearCases(conditions)).data

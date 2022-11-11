@@ -25,12 +25,12 @@ export default () => {
     };
     
     const errorHandler = error => {
-        store.state.isUserLoggedIn = false
-        store.state.token = null
-        store.state.user = null
-        router.push({
-            name: 'login'
-          })
+        // store.state.isUserLoggedIn = false
+        // store.state.token = null
+        // store.state.user = null
+        // router.push({
+        //     name: 'login'
+        //   })
         return Promise.reject(error);
     };
     
