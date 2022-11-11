@@ -73,7 +73,7 @@ export default {
         })
       )
       var pointSeries = chart.series.push(am5map.MapPointSeries.new(root, {}))
-      var colorset = am5.ColorSet.new(root, {})
+      //var colorset = am5.ColorSet.new(root, {})
       const array = this.caseColors
       const colors = array.values()
       const colors2 = array.values()
@@ -205,7 +205,6 @@ export default {
     if(this.geographicCaseData) {
       if(this.conditions)
       this.caseColors = this.toArrayOfColors(this.geographicCaseData)
-      console.log(this.caseColors)
     }
     this.loadMap()
   }
