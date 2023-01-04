@@ -83,7 +83,7 @@ export default {
         //center dot
         var circle2 = container.children.push(
           am5.Circle.new(root, {
-            radius: 4,
+            radius: 5,
             tooltipY: 0,
             fill: am5.color(colors2.next().value),
             strokeOpacity: 2,
@@ -93,7 +93,7 @@ export default {
         // outer dot
         var circle = container.children.push(
           am5.Circle.new(root, {
-            radius: 3,
+            radius: 5,
             tooltipY: 0,
             fill: am5.color(colors.next().value),
             strokeOpacity: 5,
@@ -125,9 +125,16 @@ export default {
       //add location
       for (var i = 0; i < this.geographicCaseData.length; i++) {
         var location = this.geographicCaseData[i]
-        for(var J = 0; J < location.count; J++) {
+        // computer intensive resource use
+        // for(var J = 0; J < location.count; J++) {
+        //   console.log(location.color)
+        //   const label = location.name +': '+location.condition_name +': '+location.count
+        //   addLocation(location.longitude, location.latitude, label)
+        // }
+        console.log(location.count)
+        if (location.count) {
           const label = location.name +': '+location.condition_name +': '+location.count
-          addLocation(location.longitude, location.latitude, label, location.color)
+          addLocation(location.longitude, location.latitude, label)
         }
         //addLocation(location.longitude, location.latitude, location.name)
       }
@@ -144,6 +151,8 @@ export default {
           title: name,
         })
       }
+
+
       // Add legend
       let legend = chart.children.push(am5.Legend.new(root, {
         nameField: "name",
@@ -171,17 +180,29 @@ export default {
       //
       const array = []
       obj.forEach(item => {
-        for(var J = 0; J < item.count; J++) {
-          array.push(
+        // computer intensive resource use
+        // for(var J = 0; J < item.count; J++) {
+        //   array.push(
+        //     FindColor(item.condition_name)
+        //   )
+        // }
+        array.push(
             FindColor(item.condition_name)
           )
-        }
       })
       //
       return array
     },
   },
   async mounted() {
+    let loader = this.$loading.show({
+      // Optional parameters
+      container: this.fullPage ? null : this.$refs.formContainer,
+      canCancel: false,
+      loader: 'spinner',
+      width: 100,
+      height: 64,
+    })
     this.conditions = (await conditionService.index()).data
     this.geographicCaseData =  (await geographicCaseService.index()).data
 
@@ -207,6 +228,7 @@ export default {
       this.caseColors = this.toArrayOfColors(this.geographicCaseData)
     }
     this.loadMap()
+    loader.hide()
   }
 }
 </script>

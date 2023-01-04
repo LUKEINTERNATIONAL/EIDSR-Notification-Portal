@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from 'axios'
 import store from '../store'
 import router from '../router'
 
@@ -18,19 +18,19 @@ export default () => {
 
     const responseHandler = response => {
         if (response.status === 403) {
-           // window.location = '/login';
+            window.location = '/login';
         }
     
         return response;
     };
     
     const errorHandler = error => {
-        // store.state.isUserLoggedIn = false
-        // store.state.token = null
-        // store.state.user = null
-        // router.push({
-        //     name: 'login'
-        //   })
+        store.state.isUserLoggedIn = false
+        store.state.token = null
+        store.state.user = null
+        router.push({
+            name: 'login'
+          })
         return Promise.reject(error);
     };
     
